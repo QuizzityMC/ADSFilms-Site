@@ -12,6 +12,10 @@
             color: #fff;
             margin: 0;
             padding: 20px;
+             transition: background-color 0.3s ease;
+        }
+         body:hover {
+            background-color: #000;
         }
         h1 {
             text-align: center;
@@ -19,32 +23,11 @@
             margin-bottom: 30px;
             color: #f0f0f0;
         }
-         .film-year-container {
-            position: relative;
-             margin-bottom: 30px;
-             padding-top: 10px;
-         }
-        .film-year {
-             position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            padding: 5px 15px;
-            color: white;
-             font-weight: bold;
-             font-size: 1.1rem;
-            border-radius: 0 0 10px 10px;
-            text-align: center;
-        }
-        .film-year-container.year-2025 .film-year { background-color: #e74c3c; }
-        .film-year-container.year-2024 .film-year { background-color: #3498db; }
-        .film-year-container.year-2023 .film-year { background-color: #2ecc71; }
-        .film-year-container.year-2021 .film-year { background-color: #f39c12; }
-        .film-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 25px;
-             padding-top: 20px;
+       .film-grid {
+           display: grid;
+           grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+           gap: 25px;
+           padding-top: 20px;
         }
         .film-card {
             background-color: #1a1a1a;
@@ -55,7 +38,7 @@
             position: relative;
         }
          .latest-label {
-            position: absolute;
+             position: absolute;
             top: 10px;
             left: 10px;
             background-color: #e74c3c;
@@ -66,8 +49,8 @@
             font-weight: bold;
             z-index: 2;
         }
-        .film-card.latest-film::before {
-            content: '';
+         .film-card.latest-film::before {
+             content: '';
             position: absolute;
             top: -10px;
             left: -10px;
@@ -118,7 +101,7 @@
             background-color: #2980b9;
         }
         #loginModal, #videoModal {
-             display: none;
+            display: none;
             position: fixed;
             z-index: 1000;
             left: 0;
@@ -128,7 +111,7 @@
             background-color: rgba(0,0,0,0.8);
             overflow: auto;
         }
-         .modal-content {
+        .modal-content {
             background-color: #1a1a1a;
             margin: 10% auto;
             padding: 30px;
@@ -149,20 +132,20 @@
             outline: none;
         }
         #videoModal video{
-            max-width: 90%;
+             max-width: 90%;
             max-height: 90%;
             margin: 5% auto;
             display: block;
-            background-color: #000;
+             background-color: #000;
         }
         #videoModal {
             display: flex;
             justify-content: center;
             align-items: center;
         }
-       #devReleases {
-         margin-top: 15px;
-           text-align: center;
+        #devReleases {
+            margin-top: 15px;
+            text-align: center;
         }
         #devReleases h3 {
             color: #bbb;
@@ -180,7 +163,7 @@
             display: inline-block;
         }
         #devReleases h3.open::after{
-            transform: rotate(180deg);
+             transform: rotate(180deg);
         }
         #devReleases ul {
             list-style: none;
@@ -260,18 +243,8 @@
             const filmGrid = document.createElement('div');
             filmGrid.className = 'film-grid';
             filmGridContainer.appendChild(filmGrid);
-            films.sort((a,b) => b.year - a.year);
 
-            let currentYear = null;
             films.forEach(film => {
-                if(film.year !== currentYear) {
-                    currentYear = film.year;
-                      const yearContainer = document.createElement('div');
-                      yearContainer.className = `film-year-container year-${currentYear}`;
-                        yearContainer.innerHTML = `<div class="film-year">${currentYear}</div>`;
-                    filmGridContainer.appendChild(yearContainer);
-                 }
-
                     const filmCard = document.createElement('div');
                     filmCard.className = 'film-card';
 
@@ -284,7 +257,7 @@
                                     <div class="film-title">${film.title}</div>
                                     <a href="#" class="btn" onclick="watchNow('${film.fullMovie}')">Watch Now</a>
                                     <a href="#" class="btn" onclick="playTrailer('${film.trailer}')">Play Trailer</a>
-                                     <div id="devReleases">
+                                    <div id="devReleases">
                                         <h3 onclick="toggleReleases(this)">Development Releases</h3>
                                         <ul>
                                             ${film.devReleases.map(release => `<li><a href="${release.url}">${release.name}</a></li>`).join('')}
@@ -307,10 +280,10 @@
                 });
              }
 
-        function toggleReleases(element) {
+          function toggleReleases(element) {
              const ul = element.nextElementSibling;
              element.classList.toggle("open");
-             ul.classList.toggle('open');
+              ul.classList.toggle('open');
           }
 
         function watchNow(movieSrc) {
