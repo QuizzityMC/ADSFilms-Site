@@ -6,45 +6,45 @@
     <title>ADS Films Streaming Platform</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
-         body {
-             font-family: 'Roboto', sans-serif;
-             background-color: #0a0a0a;
-             color: #fff;
-             margin: 0;
-             padding: 20px;
-         }
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #0a0a0a;
+            color: #fff;
+            margin: 0;
+            padding: 20px;
+        }
         h1 {
             text-align: center;
             font-weight: 700;
             margin-bottom: 30px;
             color: #f0f0f0;
         }
-        .film-year-container {
-           position: relative;
-            margin-bottom: 30px;
-            padding-top: 10px; /* space for ribbon */
-        }
-         .film-year {
-            position: absolute;
+         .film-year-container {
+            position: relative;
+             margin-bottom: 30px;
+             padding-top: 10px;
+         }
+        .film-year {
+             position: absolute;
             top: 0;
             left: 50%;
             transform: translateX(-50%);
             padding: 5px 15px;
             color: white;
-            font-weight: bold;
-            font-size: 1.1rem;
+             font-weight: bold;
+             font-size: 1.1rem;
             border-radius: 0 0 10px 10px;
-             text-align: center;
+            text-align: center;
         }
-         .film-year-container.year-2025 .film-year { background-color: #e74c3c; }
+        .film-year-container.year-2025 .film-year { background-color: #e74c3c; }
         .film-year-container.year-2024 .film-year { background-color: #3498db; }
-         .film-year-container.year-2023 .film-year { background-color: #2ecc71; }
-         .film-year-container.year-2021 .film-year { background-color: #f39c12; }
+        .film-year-container.year-2023 .film-year { background-color: #2ecc71; }
+        .film-year-container.year-2021 .film-year { background-color: #f39c12; }
         .film-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             gap: 25px;
-            padding-top: 20px;
+             padding-top: 20px;
         }
         .film-card {
             background-color: #1a1a1a;
@@ -56,7 +56,7 @@
         }
          .latest-label {
             position: absolute;
-             top: 10px;
+            top: 10px;
             left: 10px;
             background-color: #e74c3c;
             color: white;
@@ -66,19 +66,19 @@
             font-weight: bold;
             z-index: 2;
         }
-       .film-card.latest-film::before {
-             content: '';
+        .film-card.latest-film::before {
+            content: '';
             position: absolute;
             top: -10px;
             left: -10px;
             right: -10px;
             bottom: -10px;
-           border: 3px solid #e74c3c;
-           border-radius: 14px;
+            border: 3px solid #e74c3c;
+            border-radius: 14px;
             z-index: 1;
-           pointer-events: none;
+            pointer-events: none;
         }
-         .film-card:hover {
+        .film-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 8px 20px rgba(255, 255, 255, 0.1);
         }
@@ -162,54 +162,54 @@
         }
        #devReleases {
          margin-top: 15px;
-            text-align: center;
+           text-align: center;
         }
         #devReleases h3 {
             color: #bbb;
             margin-bottom: 5px;
             font-weight: bold;
             cursor: pointer;
-              display: inline-flex;
+            display: inline-flex;
             align-items: center;
             user-select: none;
         }
-      #devReleases h3::after {
-           content: '▼';
-           margin-left: 5px;
-           transition: transform 0.3s ease;
-           display: inline-block;
-       }
-      #devReleases h3.open::after{
-         transform: rotate(180deg);
+        #devReleases h3::after {
+            content: '▼';
+            margin-left: 5px;
+            transition: transform 0.3s ease;
+            display: inline-block;
+        }
+        #devReleases h3.open::after{
+            transform: rotate(180deg);
         }
         #devReleases ul {
-           list-style: none;
-           padding: 0;
+            list-style: none;
+            padding: 0;
             overflow: hidden;
-             max-height: 0;
+            max-height: 0;
             transition: max-height 0.3s ease;
         }
-         #devReleases ul.open {
-           max-height: 500px;
-         }
+        #devReleases ul.open {
+            max-height: 500px;
+        }
         #devReleases li {
-           margin-bottom: 8px;
-         }
+            margin-bottom: 8px;
+        }
         #devReleases a {
-           color: #3498db;
-          text-decoration: none;
-           transition: color 0.3s ease;
-         }
-       #devReleases a:hover {
-        color: #2980b9;
-       }
+            color: #3498db;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        #devReleases a:hover {
+            color: #2980b9;
+        }
     </style>
 </head>
 <body>
     <h1>ADS Films Streaming Platform</h1>
 
     <div id="filmGridContainer">
-      <!-- Films will be generated in here -->
+        <!-- Films will be generated in here -->
     </div>
 
 
@@ -222,11 +222,11 @@
         </div>
     </div>
 
-     <div id="videoModal">
-         <video controls id="customVideoPlayer">
-                Your browser does not support the video tag.
-            </video>
-        </div>
+    <div id="videoModal">
+        <video controls id="customVideoPlayer">
+            Your browser does not support the video tag.
+        </video>
+    </div>
 
     <script>
         const films = [
@@ -256,27 +256,27 @@
         ];
 
          function displayFilms() {
-             const filmGridContainer = document.getElementById('filmGridContainer');
+            const filmGridContainer = document.getElementById('filmGridContainer');
+            const filmGrid = document.createElement('div');
+            filmGrid.className = 'film-grid';
+            filmGridContainer.appendChild(filmGrid);
             films.sort((a,b) => b.year - a.year);
-           let currentYear = null;
-           let yearContainer;
-           films.forEach(film => {
-                 if(film.year !== currentYear) {
-                     currentYear = film.year;
-                    yearContainer = document.createElement('div');
-                    yearContainer.className = `film-year-container year-${currentYear}`;
-                      yearContainer.innerHTML = `<div class="film-year">${currentYear}</div>`;
-                   filmGridContainer.appendChild(yearContainer);
-                   const filmGrid = document.createElement('div');
-                   filmGrid.className = 'film-grid';
-                  yearContainer.appendChild(filmGrid);
 
-                  }
+            let currentYear = null;
+            films.forEach(film => {
+                if(film.year !== currentYear) {
+                    currentYear = film.year;
+                      const yearContainer = document.createElement('div');
+                      yearContainer.className = `film-year-container year-${currentYear}`;
+                        yearContainer.innerHTML = `<div class="film-year">${currentYear}</div>`;
+                    filmGridContainer.appendChild(yearContainer);
+                 }
 
                     const filmCard = document.createElement('div');
-                         filmCard.className = 'film-card';
+                    filmCard.className = 'film-card';
+
                      if(film.title === "The Body in the Night"){
-                             filmCard.classList.add("latest-film");
+                            filmCard.classList.add("latest-film");
                             filmCard.innerHTML = `
                              <span class="latest-label">Latest</span>
                                 <img src="${film.image}" alt="${film.title}">
@@ -284,7 +284,7 @@
                                     <div class="film-title">${film.title}</div>
                                     <a href="#" class="btn" onclick="watchNow('${film.fullMovie}')">Watch Now</a>
                                     <a href="#" class="btn" onclick="playTrailer('${film.trailer}')">Play Trailer</a>
-                                    <div id="devReleases">
+                                     <div id="devReleases">
                                         <h3 onclick="toggleReleases(this)">Development Releases</h3>
                                         <ul>
                                             ${film.devReleases.map(release => `<li><a href="${release.url}">${release.name}</a></li>`).join('')}
@@ -294,7 +294,7 @@
                             `;
                      }
                     else {
-                      filmCard.innerHTML = `
+                    filmCard.innerHTML = `
                         <img src="${film.image}" alt="${film.title}">
                         <div class="film-info">
                             <div class="film-title">${film.title}</div>
@@ -302,20 +302,18 @@
                             <a href="#" class="btn" onclick="playTrailer('${film.trailer}')">Play Trailer</a>
                         </div>
                     `;
-                   }
-                 yearContainer.querySelector(".film-grid").appendChild(filmCard);
-                 });
-
+                    }
+                 filmGrid.appendChild(filmCard);
+                });
              }
 
-          function toggleReleases(element) {
+        function toggleReleases(element) {
              const ul = element.nextElementSibling;
-               element.classList.toggle("open");
+             element.classList.toggle("open");
              ul.classList.toggle('open');
-           }
+          }
 
-
-         function watchNow(movieSrc) {
+        function watchNow(movieSrc) {
             document.getElementById('loginModal').style.display = 'block';
             sessionStorage.setItem('currentMovie', movieSrc);
         }
@@ -323,7 +321,7 @@
         function playTrailer(trailerSrc) {
             const videoPlayer = document.getElementById('customVideoPlayer');
             videoPlayer.src = trailerSrc;
-             document.getElementById('videoModal').style.display = 'flex';
+            document.getElementById('videoModal').style.display = 'flex';
         }
 
         function login() {
