@@ -12,22 +12,51 @@
             color: #fff;
             margin: 0;
             padding: 20px;
-             transition: background-color 0.3s ease;
+            transition: background-color 0.3s ease;
         }
-         body:hover {
+        body:hover {
             background-color: #000;
         }
-        h1 {
+         h1 {
             text-align: center;
             font-weight: 700;
             margin-bottom: 30px;
             color: #f0f0f0;
         }
-       .film-grid {
-           display: grid;
-           grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-           gap: 25px;
-           padding-top: 20px;
+         #searchBar {
+           width: 95%;
+           max-width: 500px;
+           margin: 0 auto 20px;
+            padding: 12px;
+            box-sizing: border-box;
+             background-color: #333;
+           border: none;
+            color: #fff;
+            border-radius: 6px;
+            outline: none;
+            display: block;
+         }
+           #latestReleases {
+             margin-bottom: 30px;
+               text-align: center;
+            }
+           #latestReleases h2 {
+               color: #bbb;
+               font-weight: bold;
+               margin-bottom: 20px;
+           }
+           #latestReleases .film-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 25px;
+                padding-top: 20px;
+                margin: 0 auto;
+           }
+        .film-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+            padding-top: 20px;
         }
         .film-card {
             background-color: #1a1a1a;
@@ -36,9 +65,16 @@
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
             position: relative;
+            cursor: pointer;
         }
-         .latest-label {
-             position: absolute;
+          .film-card.latest-film .latest-label {
+               top: 5px;
+               left: 5px;
+               font-size: 0.7rem;
+               padding: 3px 6px;
+           }
+        .latest-label {
+            position: absolute;
             top: 10px;
             left: 10px;
             background-color: #e74c3c;
@@ -49,8 +85,8 @@
             font-weight: bold;
             z-index: 2;
         }
-         .film-card.latest-film::before {
-             content: '';
+        .film-card.latest-film::before {
+            content: '';
             position: absolute;
             top: -10px;
             left: -10px;
@@ -64,21 +100,21 @@
         .film-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 8px 20px rgba(255, 255, 255, 0.1);
-        }
+         }
         .film-card img {
             width: 100%;
             height: 250px;
             object-fit: cover;
             display: block;
         }
-        .film-info {
+         .film-info {
             padding: 15px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             min-height: 120px;
         }
-        .film-title {
+         .film-title {
             font-weight: 500;
             margin-bottom: 15px;
             font-size: 1.1rem;
@@ -97,10 +133,10 @@
             border: none;
             font-size: 0.9rem;
         }
-        .btn:hover {
-            background-color: #2980b9;
+         .btn:hover {
+             background-color: #2980b9;
         }
-        #loginModal, #videoModal {
+        #loginModal, #videoModal, #filmDetailsModal {
             display: none;
             position: fixed;
             z-index: 1000;
@@ -110,6 +146,9 @@
             height: 100%;
             background-color: rgba(0,0,0,0.8);
             overflow: auto;
+             justify-content: center;
+            align-items: center;
+           
         }
         .modal-content {
             background-color: #1a1a1a;
@@ -119,7 +158,27 @@
             width: 90%;
             max-width: 450px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+             overflow: auto;
         }
+        #filmDetailsModal .modal-content {
+           max-width: 700px;
+            display: flex;
+             flex-direction: column;
+              align-items: center;
+        }
+        #filmDetailsModal .modal-content img{
+           width: 100%;
+            max-height: 300px;
+             object-fit: cover;
+           border-radius: 10px;
+              margin-bottom: 20px;
+        }
+         #filmDetailsModal .modal-content p{
+           text-align: left;
+             line-height: 1.6;
+             margin-bottom: 20px;
+           max-width: 600px;
+          }
         input {
             width: 100%;
             padding: 12px;
@@ -133,10 +192,10 @@
         }
         #videoModal video{
              max-width: 90%;
-            max-height: 90%;
+           max-height: 90%;
             margin: 5% auto;
             display: block;
-             background-color: #000;
+            background-color: #000;
         }
         #videoModal {
             display: flex;
@@ -145,51 +204,84 @@
         }
         #devReleases {
             margin-top: 15px;
-            text-align: center;
+             text-align: center;
         }
         #devReleases h3 {
-            color: #bbb;
+             color: #bbb;
             margin-bottom: 5px;
             font-weight: bold;
-            cursor: pointer;
+           cursor: pointer;
             display: inline-flex;
             align-items: center;
             user-select: none;
         }
-        #devReleases h3::after {
-            content: '▼';
-            margin-left: 5px;
-            transition: transform 0.3s ease;
+         #devReleases h3::after {
+             content: '▼';
+             margin-left: 5px;
+           transition: transform 0.3s ease;
             display: inline-block;
         }
         #devReleases h3.open::after{
-             transform: rotate(180deg);
-        }
+           transform: rotate(180deg);
+       }
         #devReleases ul {
             list-style: none;
             padding: 0;
-            overflow: hidden;
-            max-height: 0;
+           overflow: hidden;
+             max-height: 0;
             transition: max-height 0.3s ease;
         }
-        #devReleases ul.open {
-            max-height: 500px;
-        }
-        #devReleases li {
+         #devReleases ul.open {
+           max-height: 500px;
+       }
+         #devReleases li {
             margin-bottom: 8px;
-        }
+         }
         #devReleases a {
-            color: #3498db;
-            text-decoration: none;
+           color: #3498db;
+             text-decoration: none;
             transition: color 0.3s ease;
+         }
+       #devReleases a:hover {
+           color: #2980b9;
         }
-        #devReleases a:hover {
-            color: #2980b9;
-        }
+        .loading-overlay {
+           position: fixed;
+            top: 0;
+           left: 0;
+           width: 100%;
+            height: 100%;
+           background-color: rgba(0,0,0,0.8);
+          display: none;
+            justify-content: center;
+             align-items: center;
+             z-index: 1001;
+           
+          }
+           .loader {
+              border: 5px solid #333;
+             border-top: 5px solid #3498db;
+           border-radius: 50%;
+             width: 50px;
+             height: 50px;
+           animation: spin 1s linear infinite;
+         }
+           @keyframes spin {
+              0% {transform: rotate(0deg);}
+            100% {transform: rotate(360deg);}
+         }
     </style>
 </head>
 <body>
+     <div class="loading-overlay" id="loadingOverlay">
+        <div class="loader"></div>
+    </div>
+
     <h1>ADS Films Streaming Platform</h1>
+
+     <input type="text" id="searchBar" placeholder="Search Films...">
+
+     <div id="latestReleases"></div>
 
     <div id="filmGridContainer">
         <!-- Films will be generated in here -->
@@ -211,11 +303,19 @@
         </video>
     </div>
 
+    <div id="filmDetailsModal">
+       <div class="modal-content">
+        <!--  Film Details Here-->
+       </div>
+   </div>
+
+
     <script>
-        const films = [
+         const films = [
               {
                  title: "The Body in the Night",
                 image: "video-capture-1019.40seg-6394.png",
+                  description: "A chilling thriller where a body is found in the middle of the night, and a detective must race against time to find the killer. Development releases are available below!",
                 trailer: "trailers/body_in_night_trailer.mp4",
                 fullMovie: "blob:https://fraigo.github.io/72a7aa8d-f155-4695-aa9e-1c55ce8e2586",
                 year: 2025,
@@ -231,33 +331,32 @@
                          { name: "Release 9", url: "https://example.com/dev9.zip" },
                  ]
               },
-              { title: "Goats in the outback", image: "video-capture-79.11seg-8714.png", trailer: "trailers/goats_outback_trailer.mp4", fullMovie: "movies/goats_outback.mp4", year: 2024 },
-            { title: "Detectives at a Dead End", image: "video-capture-362.32seg-6905.png", trailer: "trailers/detectives_dead_end_trailer.mp4", fullMovie: "movies/detectives_dead_end.mp4", year: 2024 },
-              { title: "On our own", image: "video-capture-544.63seg-2710.png", trailer: "trailers/on_our_own_trailer.mp4", fullMovie: "movies/on_our_own.mp4", year: 2023 },
-            { title: "The Issue With Crime", image: "video-capture-85.83seg-6017.png", trailer: "movies/The%20issue%20with%20crime%20trailer.mp4", fullMovie: "movies/issue_with_crime.mp4", year: 2023 },
-            { title: "Death on the Fjord", image: "video-capture-551.73seg-6341.png", trailer: "trailers/issue_with_crime_trailer.mp4", fullMovie: "movies/doft.mp4", year: 2021}
+              { title: "Goats in the outback", description: "A comedy adventure where a group of friends go looking for a missing herd of goats across Australia's desolate outback.", image: "video-capture-79.11seg-8714.png", trailer: "trailers/goats_outback_trailer.mp4", fullMovie: "movies/goats_outback.mp4", year: 2024 },
+            { title: "Detectives at a Dead End", description: "A detective procedural where a pair of detectives find themselves completely stuck on a case with no leads and no suspects.", image: "video-capture-362.32seg-6905.png", trailer: "trailers/detectives_dead_end_trailer.mp4", fullMovie: "movies/detectives_dead_end.mp4", year: 2024 },
+              { title: "On our own",  description: "A story of growing up, where a group of friends must learn to make their own way in the world.", image: "video-capture-544.63seg-2710.png", trailer: "trailers/on_our_own_trailer.mp4", fullMovie: "movies/on_our_own.mp4", year: 2023 },
+            { title: "The Issue With Crime",  description: "A documentary series that looks at the cause of crime in the city and what can be done to mitigate it.", image: "video-capture-85.83seg-6017.png", trailer: "movies/The%20issue%20with%20crime%20trailer.mp4", fullMovie: "movies/issue_with_crime.mp4", year: 2023 },
+            { title: "Death on the Fjord", description: "A scandanavian crime thriller where a series of murders plague a small village by a large fjord.", image: "video-capture-551.73seg-6341.png", trailer: "trailers/issue_with_crime_trailer.mp4", fullMovie: "movies/doft.mp4", year: 2021}
         ];
 
          function displayFilms() {
-            const filmGridContainer = document.getElementById('filmGridContainer');
+             const filmGridContainer = document.getElementById('filmGridContainer');
             const filmGrid = document.createElement('div');
-            filmGrid.className = 'film-grid';
-            filmGridContainer.appendChild(filmGrid);
+           filmGrid.className = 'film-grid';
+          filmGridContainer.appendChild(filmGrid);
 
             films.forEach(film => {
-                    const filmCard = document.createElement('div');
-                    filmCard.className = 'film-card';
-
-                     if(film.title === "The Body in the Night"){
-                            filmCard.classList.add("latest-film");
-                            filmCard.innerHTML = `
+                 const filmCard = document.createElement('div');
+                filmCard.className = 'film-card';
+                if (film.title === "The Body in the Night") {
+                     filmCard.classList.add('latest-film');
+                  filmCard.innerHTML = `
                              <span class="latest-label">Latest</span>
                                 <img src="${film.image}" alt="${film.title}">
                                 <div class="film-info">
                                     <div class="film-title">${film.title}</div>
                                     <a href="#" class="btn" onclick="watchNow('${film.fullMovie}')">Watch Now</a>
                                     <a href="#" class="btn" onclick="playTrailer('${film.trailer}')">Play Trailer</a>
-                                    <div id="devReleases">
+                                     <div id="devReleases">
                                         <h3 onclick="toggleReleases(this)">Development Releases</h3>
                                         <ul>
                                             ${film.devReleases.map(release => `<li><a href="${release.url}">${release.name}</a></li>`).join('')}
@@ -265,39 +364,115 @@
                                     </div>
                                 </div>
                             `;
+                 } else {
+                        filmCard.innerHTML = `
+                            <img src="${film.image}" alt="${film.title}">
+                            <div class="film-info">
+                                <div class="film-title">${film.title}</div>
+                                <a href="#" class="btn" onclick="watchNow('${film.fullMovie}')">Watch Now</a>
+                                <a href="#" class="btn" onclick="playTrailer('${film.trailer}')">Play Trailer</a>
+                            </div>
+                        `;
+                    }
+                filmCard.onclick = () => showFilmDetails(film)
+                filmGrid.appendChild(filmCard);
+            });
+             displayLatestReleases();
+             setupSearchFunctionality();
+        }
+
+        function displayLatestReleases() {
+            const latestReleasesContainer = document.getElementById('latestReleases');
+             latestReleasesContainer.innerHTML = `<h2>Latest Releases</h2>`;
+            const latestFilmGrid = document.createElement('div');
+            latestFilmGrid.className = 'film-grid';
+              const latest = films.slice().sort((a,b) => b.year - a.year).slice(0,2);
+
+             latest.forEach(film => {
+                const filmCard = document.createElement('div');
+                   filmCard.className = 'film-card';
+                   if (film.title === "The Body in the Night") {
+                      filmCard.classList.add('latest-film');
+                    filmCard.innerHTML = `
+                         <span class="latest-label">Latest</span>
+                            <img src="${film.image}" alt="${film.title}">
+                            <div class="film-info">
+                                <div class="film-title">${film.title}</div>
+                                <a href="#" class="btn" onclick="watchNow('${film.fullMovie}')">Watch Now</a>
+                                <a href="#" class="btn" onclick="playTrailer('${film.trailer}')">Play Trailer</a>
+                            </div>
+                        `;
                      }
                     else {
-                    filmCard.innerHTML = `
-                        <img src="${film.image}" alt="${film.title}">
-                        <div class="film-info">
-                            <div class="film-title">${film.title}</div>
-                            <a href="#" class="btn" onclick="watchNow('${film.fullMovie}')">Watch Now</a>
-                            <a href="#" class="btn" onclick="playTrailer('${film.trailer}')">Play Trailer</a>
-                        </div>
-                    `;
-                    }
-                 filmGrid.appendChild(filmCard);
-                });
-             }
+                           filmCard.innerHTML = `
+                               <img src="${film.image}" alt="${film.title}">
+                                <div class="film-info">
+                                   <div class="film-title">${film.title}</div>
+                                    <a href="#" class="btn" onclick="watchNow('${film.fullMovie}')">Watch Now</a>
+                                   <a href="#" class="btn" onclick="playTrailer('${film.trailer}')">Play Trailer</a>
+                               </div>
+                           `;
+                       }
+                    filmCard.onclick = () => showFilmDetails(film)
+                     latestFilmGrid.appendChild(filmCard);
+            })
 
-          function toggleReleases(element) {
+            latestReleasesContainer.appendChild(latestFilmGrid);
+         }
+
+         function setupSearchFunctionality() {
+           const searchBar = document.getElementById("searchBar");
+             searchBar.addEventListener("input", (e) => {
+                const searchTerm = e.target.value.toLowerCase();
+                const filmCards = document.querySelectorAll(".film-card");
+                filmCards.forEach(card => {
+                     const title = card.querySelector(".film-title").textContent.toLowerCase();
+                      if (title.includes(searchTerm)) {
+                            card.style.display = "";
+                        } else {
+                           card.style.display = "none";
+                       }
+                 });
+             });
+         }
+          function showFilmDetails(film) {
+            const detailsModal = document.getElementById('filmDetailsModal');
+            const modalContent = detailsModal.querySelector('.modal-content');
+                modalContent.innerHTML = `
+                    <img src="${film.image}" alt="${film.title}">
+                     <h2>${film.title}</h2>
+                    <p>${film.description}</p>
+                   <button class="btn" onclick="document.getElementById('filmDetailsModal').style.display = 'none'">Close</button>
+             `;
+              detailsModal.style.display = 'flex';
+           }
+
+        function toggleReleases(element) {
              const ul = element.nextElementSibling;
              element.classList.toggle("open");
               ul.classList.toggle('open');
           }
 
-        function watchNow(movieSrc) {
-            document.getElementById('loginModal').style.display = 'block';
-            sessionStorage.setItem('currentMovie', movieSrc);
-        }
+         function watchNow(movieSrc) {
+               showLoading();
+               setTimeout(() => {
+                    hideLoading();
+                     document.getElementById('loginModal').style.display = 'block';
+                       sessionStorage.setItem('currentMovie', movieSrc);
+                 }, 500)
+          }
 
-        function playTrailer(trailerSrc) {
-            const videoPlayer = document.getElementById('customVideoPlayer');
-            videoPlayer.src = trailerSrc;
-            document.getElementById('videoModal').style.display = 'flex';
-        }
+         function playTrailer(trailerSrc) {
+              showLoading();
+               setTimeout(() => {
+                    hideLoading();
+                       const videoPlayer = document.getElementById('customVideoPlayer');
+                         videoPlayer.src = trailerSrc;
+                    document.getElementById('videoModal').style.display = 'flex';
+                 }, 500)
+            }
 
-        function login() {
+         function login() {
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
 
@@ -320,11 +495,24 @@
             if (event.target == document.getElementById('loginModal')) {
                 document.getElementById('loginModal').style.display = 'none';
             }
-            if (event.target == document.getElementById('videoModal')) {
+              if (event.target == document.getElementById('videoModal')) {
                 document.getElementById('videoModal').style.display = 'none';
                 document.getElementById('customVideoPlayer').pause();
             }
+            if(event.target == document.getElementById("filmDetailsModal")){
+                document.getElementById("filmDetailsModal").style.display = "none";
+            }
+
         }
+
+           function showLoading() {
+                 document.getElementById('loadingOverlay').style.display = 'flex';
+             }
+
+             function hideLoading() {
+                 document.getElementById('loadingOverlay').style.display = 'none';
+           }
+
 
         displayFilms();
     </script>
