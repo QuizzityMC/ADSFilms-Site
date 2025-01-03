@@ -20,9 +20,9 @@
             color: #f0f0f0;
         }
         .film-year {
-          margin-bottom: 10px;
-          text-align: center;
-          color: #bbb;
+            margin-bottom: 10px;
+            text-align: left;
+            color: #bbb;
             font-weight: bold;
             font-size: 1.2rem;
              border-bottom: 2px solid #333;
@@ -148,20 +148,38 @@
             align-items: center;
         }
        #devReleases {
-        margin-top: 20px;
-       }
+         margin-top: 15px;
+            text-align: center;
+        }
         #devReleases h3 {
-           color: #bbb;
-           text-align: center;
-           margin-bottom: 15px;
-           font-weight: bold;
+            color: #bbb;
+            margin-bottom: 5px;
+            font-weight: bold;
+            cursor: pointer;
+              display: inline-flex;
+            align-items: center;
+            user-select: none;
+        }
+      #devReleases h3::after {
+           content: '▼';
+           margin-left: 5px;
+           transition: transform 0.3s ease;
+           display: inline-block;
+       }
+      #devReleases h3.open::after{
+         transform: rotate(180deg);
         }
         #devReleases ul {
            list-style: none;
            padding: 0;
-           text-align: center;
+            overflow: hidden;
+             max-height: 0;
+            transition: max-height 0.3s ease;
+        }
+         #devReleases ul.open {
+           max-height: 500px;
          }
-         #devReleases li {
+        #devReleases li {
            margin-bottom: 8px;
          }
         #devReleases a {
@@ -225,44 +243,38 @@
         ];
 
         function displayFilms() {
-            const filmGridContainer = document.getElementById('filmGridContainer');
-            const groupedFilms = {};
-             films.sort((a,b) => b.year - a.year);
-              films.forEach(film => {
-                   if (!groupedFilms[film.year]) {
-                         groupedFilms[film.year] = [];
-                    }
-                     groupedFilms[film.year].push(film);
-              })
-
-            for(const year in groupedFilms){
-                   const yearDiv = document.createElement('div');
+             const filmGridContainer = document.getElementById('filmGridContainer');
+             const filmGrid = document.createElement('div');
+             filmGrid.className = 'film-grid';
+            films.sort((a,b) => b.year - a.year);
+           let currentYear = null;
+           films.forEach(film => {
+                 if(film.year !== currentYear) {
+                     currentYear = film.year;
+                     const yearDiv = document.createElement('div');
                     yearDiv.className = 'film-year';
-                    yearDiv.textContent = year;
-                    filmGridContainer.appendChild(yearDiv);
-                    const filmGrid = document.createElement('div');
-                     filmGrid.className = 'film-grid';
-
-                 groupedFilms[year].forEach((film, index) => {
-                        const filmCard = document.createElement('div');
+                    yearDiv.textContent = currentYear;
+                      filmGridContainer.appendChild(yearDiv);
+                  }
+                    const filmCard = document.createElement('div');
                          filmCard.className = 'film-card';
                      if(film.title === "The Body in the Night"){
                              filmCard.classList.add("latest-film");
-                         filmCard.innerHTML = `
-                         <span class="latest-label">Latest</span>
-                            <img src="${film.image}" alt="${film.title}">
-                            <div class="film-info">
-                                <div class="film-title">${film.title}</div>
-                                <a href="#" class="btn" onclick="watchNow('${film.fullMovie}')">Watch Now</a>
-                                <a href="#" class="btn" onclick="playTrailer('${film.trailer}')">Play Trailer</a>
-                                <div id="devReleases">
-                                  <h3>Development Releases</h3>
-                                  <ul>
-                                      ${film.devReleases.map(release => `<li><a href="${release.url}">${release.name}</a></li>`).join('')}
-                                  </ul>
-                              </div>
-                            </div>
-                         `;
+                            filmCard.innerHTML = `
+                             <span class="latest-label">Latest</span>
+                                <img src="${film.image}" alt="${film.title}">
+                                <div class="film-info">
+                                    <div class="film-title">${film.title}</div>
+                                    <a href="#" class="btn" onclick="watchNow('${film.fullMovie}')">Watch Now</a>
+                                    <a href="#" class="btn" onclick="playTrailer('${film.trailer}')">Play Trailer</a>
+                                    <div id="devReleases">
+                                        <h3 onclick="toggleReleases(this)">Development Releases</h3>
+                                        <ul>
+                                            ${film.devReleases.map(release => `<li><a href="${release.url}">${release.name}</a></li>`).join('')}
+                                        </ul>
+                                    </div>
+                                </div>
+                            `;
                      }
                     else {
                       filmCard.innerHTML = `
@@ -274,13 +286,17 @@
                         </div>
                     `;
                    }
-
-                  filmGrid.appendChild(filmCard);
-                });
-               filmGridContainer.appendChild(filmGrid);
+                 filmGrid.appendChild(filmCard);
+                 });
+                filmGridContainer.appendChild(filmGrid);
              }
 
-        }
+          function toggleReleases(element) {
+             const ul = element.nextElementSibling;
+               element.classList.toggle("open");
+             ul.classList.toggle('open');
+           }
+
 
          function watchNow(movieSrc) {
             document.getElementById('loginModal').style.display = 'block';
@@ -291,7 +307,6 @@
             const videoPlayer = document.getElementById('customVideoPlayer');
             videoPlayer.src = trailerSrc;
              document.getElementById('videoModal').style.display = 'flex';
-             videoPlayer.play();
         }
 
         function login() {
@@ -306,7 +321,6 @@
                     const videoPlayer = document.getElementById('customVideoPlayer');
                     videoPlayer.src = movieSrc;
                     document.getElementById('videoModal').style.display = 'flex';
-                     videoPlayer.play();
                     sessionStorage.removeItem('currentMovie');
                 }
             } else {
