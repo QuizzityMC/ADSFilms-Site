@@ -51,7 +51,7 @@
             position: relative;
             cursor: pointer;
         }
-        .film-card.latest-film .latest-label {
+         .film-card.latest-film .latest-label {
             top: 5px;
             left: 5px;
             font-size: 0.7rem;
@@ -198,15 +198,15 @@
             align-items: center;
             user-select: none;
         }
-        #devReleases h3::after {
+         #devReleases h3::after {
             content: '▼';
             margin-left: 5px;
             transition: transform 0.3s ease;
             display: inline-block;
-        }
-        #devReleases h3.open::after{
+         }
+         #devReleases h3.open::after{
             transform: rotate(180deg);
-        }
+         }
         #devReleases ul {
             list-style: none;
             padding: 0;
@@ -216,17 +216,17 @@
         }
         #devReleases ul.open {
             max-height: 500px;
-        }
+         }
         #devReleases li {
-            margin-bottom: 8px;
+             margin-bottom: 8px;
         }
-        #devReleases a {
+         #devReleases a {
             color: #3498db;
             text-decoration: none;
             transition: color 0.3s ease;
-        }
-        #devReleases a:hover {
-            color: #2980b9;
+         }
+         #devReleases a:hover {
+             color: #2980b9;
         }
         .loading-overlay {
             position: fixed;
@@ -316,20 +316,21 @@
             { title: "Death on the Fjord", description: "A scandanavian crime thriller where a series of murders plague a small village by a large fjord.", image: "video-capture-551.73seg-6341.png", trailer: "trailers/issue_with_crime_trailer.mp4", fullMovie: "movies/doft.mp4", year: 2021 }
         ];
 
-        function displayFilms() {
-            const filmGridContainer = document.getElementById('filmGridContainer');
+         function displayFilms() {
+             const filmGridContainer = document.getElementById('filmGridContainer');
             const filmGrid = document.createElement('div');
             filmGrid.className = 'film-grid';
             filmGridContainer.appendChild(filmGrid);
 
             const latest = films.slice().sort((a,b) => b.year - a.year).slice(0,2);
-
+             let shownLatest = false;
             films.forEach(film => {
                 const filmCard = document.createElement('div');
                 filmCard.className = 'film-card';
-                if (latest.includes(film)) {
-                    filmCard.classList.add('latest-film');
-                    filmCard.innerHTML = `
+                 if (latest.includes(film) && !shownLatest) {
+                      shownLatest = true;
+                       filmCard.classList.add('latest-film');
+                      filmCard.innerHTML = `
                              <span class="latest-label">Latest</span>
                                 <img src="${film.image}" alt="${film.title}">
                                 <div class="film-info">
@@ -344,8 +345,8 @@
                                     </div>
                                 </div>
                             `;
-                } else {
-                    filmCard.innerHTML = `
+                 } else {
+                        filmCard.innerHTML = `
                             <img src="${film.image}" alt="${film.title}">
                             <div class="film-info">
                                 <div class="film-title">${film.title}</div>
@@ -353,12 +354,14 @@
                                 <a href="#" class="btn" onclick="playTrailer('${film.trailer}')">Play Trailer</a>
                             </div>
                         `;
-                }
-                filmCard.onclick = () => showFilmDetails(film);
-                filmGrid.appendChild(filmCard);
-            });
-            setupSearchFunctionality();
+                    }
+                 filmCard.onclick = () => showFilmDetails(film);
+                  filmGrid.appendChild(filmCard);
+
+                });
+                setupSearchFunctionality();
         }
+
 
         function setupSearchFunctionality() {
             const searchBar = document.getElementById("searchBar");
@@ -393,7 +396,6 @@
             element.classList.toggle("open");
             ul.classList.toggle('open');
         }
-
 
         function watchNow(movieSrc) {
             showLoading();
@@ -437,15 +439,15 @@
             if (event.target == document.getElementById('loginModal')) {
                 document.getElementById('loginModal').style.display = 'none';
             }
-            if (event.target == document.getElementById('videoModal')) {
-                document.getElementById('videoModal').style.display = 'none';
+           if (event.target == document.getElementById('videoModal')) {
+               document.getElementById('videoModal').style.display = 'none';
                 document.getElementById('customVideoPlayer').pause();
             }
-            if (event.target == document.getElementById("filmDetailsModal")) {
+            if(event.target == document.getElementById("filmDetailsModal")) {
                 document.getElementById("filmDetailsModal").style.display = "none";
             }
-
         }
+
 
         function showLoading() {
             document.getElementById('loadingOverlay').style.display = 'flex';
