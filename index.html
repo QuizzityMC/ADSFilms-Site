@@ -17,46 +17,30 @@
         body:hover {
             background-color: #000;
         }
-         h1 {
+        h1 {
             text-align: center;
             font-weight: 700;
             margin-bottom: 30px;
             color: #f0f0f0;
         }
          #searchBar {
-           width: 95%;
-           max-width: 500px;
-           margin: 0 auto 20px;
+             width: 95%;
+             max-width: 500px;
+             margin: 0 auto 20px;
             padding: 12px;
             box-sizing: border-box;
-             background-color: #333;
-           border: none;
+            background-color: #333;
+            border: none;
             color: #fff;
             border-radius: 6px;
             outline: none;
             display: block;
          }
-           #latestReleases {
-             margin-bottom: 30px;
-               text-align: center;
-            }
-           #latestReleases h2 {
-               color: #bbb;
-               font-weight: bold;
-               margin-bottom: 20px;
-           }
-           #latestReleases .film-grid {
-                display: grid;
-                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-                gap: 25px;
-                padding-top: 20px;
-                margin: 0 auto;
-           }
-        .film-grid {
+         .film-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             gap: 25px;
-            padding-top: 20px;
+             padding-top: 20px;
         }
         .film-card {
             background-color: #1a1a1a;
@@ -67,15 +51,15 @@
             position: relative;
             cursor: pointer;
         }
-          .film-card.latest-film .latest-label {
+        .film-card.latest-film .latest-label {
                top: 5px;
                left: 5px;
                font-size: 0.7rem;
                padding: 3px 6px;
            }
-        .latest-label {
-            position: absolute;
-            top: 10px;
+         .latest-label {
+             position: absolute;
+             top: 10px;
             left: 10px;
             background-color: #e74c3c;
             color: white;
@@ -85,16 +69,16 @@
             font-weight: bold;
             z-index: 2;
         }
-        .film-card.latest-film::before {
+         .film-card.latest-film::before {
             content: '';
             position: absolute;
             top: -10px;
-            left: -10px;
+             left: -10px;
             right: -10px;
-            bottom: -10px;
+             bottom: -10px;
             border: 3px solid #e74c3c;
             border-radius: 14px;
-            z-index: 1;
+           z-index: 1;
             pointer-events: none;
         }
         .film-card:hover {
@@ -108,180 +92,175 @@
             display: block;
         }
          .film-info {
-            padding: 15px;
-            display: flex;
-            flex-direction: column;
+             padding: 15px;
+             display: flex;
+             flex-direction: column;
             justify-content: space-between;
             min-height: 120px;
-        }
+         }
          .film-title {
-            font-weight: 500;
-            margin-bottom: 15px;
-            font-size: 1.1rem;
+             font-weight: 500;
+             margin-bottom: 15px;
+           font-size: 1.1rem;
         }
-        .btn {
-            display: inline-block;
-            padding: 10px 20px;
+         .btn {
+           display: inline-block;
+             padding: 10px 20px;
             margin: 5px 0;
-            background-color: #3498db;
-            color: #fff;
+             background-color: #3498db;
+           color: #fff;
             text-decoration: none;
             border-radius: 6px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
-            text-align: center;
+             transition: background-color 0.3s ease;
+           text-align: center;
             border: none;
-            font-size: 0.9rem;
-        }
-         .btn:hover {
+             font-size: 0.9rem;
+         }
+        .btn:hover {
              background-color: #2980b9;
         }
         #loginModal, #videoModal, #filmDetailsModal {
-            display: none;
-            position: fixed;
+           display: none;
+             position: fixed;
             z-index: 1000;
-            left: 0;
+           left: 0;
             top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.8);
+             width: 100%;
+           height: 100%;
+           background-color: rgba(0,0,0,0.8);
             overflow: auto;
-             justify-content: center;
+            justify-content: center;
             align-items: center;
-           
         }
         .modal-content {
             background-color: #1a1a1a;
             margin: 10% auto;
             padding: 30px;
             border-radius: 12px;
-            width: 90%;
-            max-width: 450px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-             overflow: auto;
+             width: 90%;
+           max-width: 450px;
+           box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+            overflow: auto;
         }
-        #filmDetailsModal .modal-content {
-           max-width: 700px;
+         #filmDetailsModal .modal-content {
+            max-width: 700px;
             display: flex;
              flex-direction: column;
-              align-items: center;
+            align-items: center;
         }
-        #filmDetailsModal .modal-content img{
-           width: 100%;
+         #filmDetailsModal .modal-content img{
+            width: 100%;
             max-height: 300px;
              object-fit: cover;
-           border-radius: 10px;
-              margin-bottom: 20px;
-        }
-         #filmDetailsModal .modal-content p{
-           text-align: left;
-             line-height: 1.6;
+            border-radius: 10px;
              margin-bottom: 20px;
-           max-width: 600px;
+         }
+          #filmDetailsModal .modal-content p{
+            text-align: left;
+            line-height: 1.6;
+             margin-bottom: 20px;
+              max-width: 600px;
           }
         input {
-            width: 100%;
+             width: 100%;
             padding: 12px;
-            margin: 10px 0;
-            box-sizing: border-box;
-            background-color: #333;
+           margin: 10px 0;
+             box-sizing: border-box;
+           background-color: #333;
             border: none;
-            color: #fff;
+             color: #fff;
             border-radius: 6px;
             outline: none;
-        }
-        #videoModal video{
-             max-width: 90%;
+         }
+         #videoModal video{
+            max-width: 90%;
            max-height: 90%;
-            margin: 5% auto;
+           margin: 5% auto;
             display: block;
             background-color: #000;
         }
-        #videoModal {
-            display: flex;
+         #videoModal {
+           display: flex;
             justify-content: center;
-            align-items: center;
+             align-items: center;
         }
         #devReleases {
-            margin-top: 15px;
-             text-align: center;
-        }
+             margin-top: 15px;
+            text-align: center;
+         }
         #devReleases h3 {
              color: #bbb;
             margin-bottom: 5px;
             font-weight: bold;
-           cursor: pointer;
-            display: inline-flex;
+            cursor: pointer;
+             display: inline-flex;
             align-items: center;
             user-select: none;
         }
-         #devReleases h3::after {
-             content: '▼';
-             margin-left: 5px;
-           transition: transform 0.3s ease;
+        #devReleases h3::after {
+            content: '▼';
+            margin-left: 5px;
+             transition: transform 0.3s ease;
             display: inline-block;
+         }
+       #devReleases h3.open::after{
+            transform: rotate(180deg);
         }
-        #devReleases h3.open::after{
-           transform: rotate(180deg);
-       }
-        #devReleases ul {
+         #devReleases ul {
             list-style: none;
             padding: 0;
-           overflow: hidden;
-             max-height: 0;
+             overflow: hidden;
+            max-height: 0;
             transition: max-height 0.3s ease;
-        }
-         #devReleases ul.open {
-           max-height: 500px;
-       }
-         #devReleases li {
-            margin-bottom: 8px;
          }
-        #devReleases a {
-           color: #3498db;
-             text-decoration: none;
+         #devReleases ul.open {
+            max-height: 500px;
+        }
+        #devReleases li {
+             margin-bottom: 8px;
+         }
+       #devReleases a {
+             color: #3498db;
+           text-decoration: none;
             transition: color 0.3s ease;
          }
-       #devReleases a:hover {
+         #devReleases a:hover {
            color: #2980b9;
         }
-        .loading-overlay {
-           position: fixed;
-            top: 0;
-           left: 0;
-           width: 100%;
-            height: 100%;
-           background-color: rgba(0,0,0,0.8);
-          display: none;
-            justify-content: center;
+         .loading-overlay {
+            position: fixed;
+             top: 0;
+            left: 0;
+            width: 100%;
+             height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            display: none;
+             justify-content: center;
              align-items: center;
-             z-index: 1001;
-           
-          }
-           .loader {
-              border: 5px solid #333;
-             border-top: 5px solid #3498db;
-           border-radius: 50%;
-             width: 50px;
-             height: 50px;
-           animation: spin 1s linear infinite;
+            z-index: 1001;
          }
-           @keyframes spin {
-              0% {transform: rotate(0deg);}
+         .loader {
+             border: 5px solid #333;
+            border-top: 5px solid #3498db;
+            border-radius: 50%;
+            width: 50px;
+             height: 50px;
+             animation: spin 1s linear infinite;
+         }
+        @keyframes spin {
+            0% {transform: rotate(0deg);}
             100% {transform: rotate(360deg);}
          }
     </style>
 </head>
 <body>
-     <div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-overlay" id="loadingOverlay">
         <div class="loader"></div>
     </div>
 
     <h1>ADS Films Streaming Platform</h1>
-
-     <input type="text" id="searchBar" placeholder="Search Films...">
-
-     <div id="latestReleases"></div>
+    <input type="text" id="searchBar" placeholder="Search Films...">
 
     <div id="filmGridContainer">
         <!-- Films will be generated in here -->
@@ -308,7 +287,6 @@
         <!--  Film Details Here-->
        </div>
    </div>
-
 
     <script>
          const films = [
@@ -343,13 +321,14 @@
             const filmGrid = document.createElement('div');
            filmGrid.className = 'film-grid';
           filmGridContainer.appendChild(filmGrid);
+             const latest = films.slice().sort((a,b) => b.year - a.year).slice(0,2);
 
             films.forEach(film => {
                  const filmCard = document.createElement('div');
                 filmCard.className = 'film-card';
-                if (film.title === "The Body in the Night") {
-                     filmCard.classList.add('latest-film');
-                  filmCard.innerHTML = `
+                 if (latest.includes(film)) {
+                      filmCard.classList.add('latest-film');
+                    filmCard.innerHTML = `
                              <span class="latest-label">Latest</span>
                                 <img src="${film.image}" alt="${film.title}">
                                 <div class="film-info">
@@ -377,48 +356,8 @@
                 filmCard.onclick = () => showFilmDetails(film)
                 filmGrid.appendChild(filmCard);
             });
-             displayLatestReleases();
              setupSearchFunctionality();
         }
-
-        function displayLatestReleases() {
-            const latestReleasesContainer = document.getElementById('latestReleases');
-             latestReleasesContainer.innerHTML = `<h2>Latest Releases</h2>`;
-            const latestFilmGrid = document.createElement('div');
-            latestFilmGrid.className = 'film-grid';
-              const latest = films.slice().sort((a,b) => b.year - a.year).slice(0,2);
-
-             latest.forEach(film => {
-                const filmCard = document.createElement('div');
-                   filmCard.className = 'film-card';
-                   if (film.title === "The Body in the Night") {
-                      filmCard.classList.add('latest-film');
-                    filmCard.innerHTML = `
-                         <span class="latest-label">Latest</span>
-                            <img src="${film.image}" alt="${film.title}">
-                            <div class="film-info">
-                                <div class="film-title">${film.title}</div>
-                                <a href="#" class="btn" onclick="watchNow('${film.fullMovie}')">Watch Now</a>
-                                <a href="#" class="btn" onclick="playTrailer('${film.trailer}')">Play Trailer</a>
-                            </div>
-                        `;
-                     }
-                    else {
-                           filmCard.innerHTML = `
-                               <img src="${film.image}" alt="${film.title}">
-                                <div class="film-info">
-                                   <div class="film-title">${film.title}</div>
-                                    <a href="#" class="btn" onclick="watchNow('${film.fullMovie}')">Watch Now</a>
-                                   <a href="#" class="btn" onclick="playTrailer('${film.trailer}')">Play Trailer</a>
-                               </div>
-                           `;
-                       }
-                    filmCard.onclick = () => showFilmDetails(film)
-                     latestFilmGrid.appendChild(filmCard);
-            })
-
-            latestReleasesContainer.appendChild(latestFilmGrid);
-         }
 
          function setupSearchFunctionality() {
            const searchBar = document.getElementById("searchBar");
@@ -435,6 +374,7 @@
                  });
              });
          }
+
           function showFilmDetails(film) {
             const detailsModal = document.getElementById('filmDetailsModal');
             const modalContent = detailsModal.querySelector('.modal-content');
@@ -452,6 +392,7 @@
              element.classList.toggle("open");
               ul.classList.toggle('open');
           }
+
 
          function watchNow(movieSrc) {
                showLoading();
@@ -495,7 +436,7 @@
             if (event.target == document.getElementById('loginModal')) {
                 document.getElementById('loginModal').style.display = 'none';
             }
-              if (event.target == document.getElementById('videoModal')) {
+             if (event.target == document.getElementById('videoModal')) {
                 document.getElementById('videoModal').style.display = 'none';
                 document.getElementById('customVideoPlayer').pause();
             }
@@ -505,14 +446,13 @@
 
         }
 
-           function showLoading() {
+          function showLoading() {
                  document.getElementById('loadingOverlay').style.display = 'flex';
              }
 
              function hideLoading() {
                  document.getElementById('loadingOverlay').style.display = 'none';
            }
-
 
         displayFilms();
     </script>
