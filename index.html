@@ -8,125 +8,115 @@
     <style>
         body {
             font-family: 'Roboto', sans-serif;
-            background-color: #000;
+            background-color: #0a0a0a; /* Darker background */
             color: #fff;
             margin: 0;
             padding: 20px;
+            
         }
         h1 {
             text-align: center;
             font-weight: 700;
+            margin-bottom: 30px; /* Added space after title */
+            color: #f0f0f0; /* Lighter title color */
         }
         .film-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Larger cards */
+            gap: 25px; /* Increased gap */
         }
         .film-card {
-            background-color: #111;
-            border-radius: 8px;
+            background-color: #1a1a1a; /* Darker card background */
+            border-radius: 12px; /* More rounded corners */
             overflow: hidden;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Subtle shadow */
         }
         .film-card:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px); /* Slight hover lift */
+            box-shadow: 0 8px 20px rgba(255, 255, 255, 0.1); /* Enhanced hover shadow */
         }
         .film-card img {
             width: 100%;
-            height: 200px;
+            height: 250px; /* Increased image height */
             object-fit: cover;
+            display: block;
         }
         .film-info {
-            padding: 10px;
+            padding: 15px; /* Increased padding */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 120px; /* Minimum height for info area */
         }
         .film-title {
-            font-weight: bold;
-            margin-bottom: 10px;
+            font-weight: 500; /* Slightly lighter bold for title */
+            margin-bottom: 15px; /* Added space under title */
+            font-size: 1.1rem; /* Slightly larger font */
         }
         .btn {
             display: inline-block;
-            padding: 8px 16px;
-            margin: 5px;
-            background-color: #007bff;
+            padding: 10px 20px; /* Larger button padding */
+            margin: 5px 0; /* Spacing around buttons */
+            background-color: #3498db;
             color: #fff;
             text-decoration: none;
-            border-radius: 4px;
+            border-radius: 6px;
             cursor: pointer;
             transition: background-color 0.3s ease;
+            text-align: center;
+             border: none;
+             font-size: 0.9rem;
         }
         .btn:hover {
-            background-color: #0056b3;
+            background-color: #2980b9;
         }
         #loginModal, #videoModal {
             display: none;
             position: fixed;
-            z-index: 1;
+            z-index: 1000; /* Ensure modals are on top */
             left: 0;
             top: 0;
             width: 100%;
             height: 100%;
             background-color: rgba(0,0,0,0.8);
+            overflow: auto; /* Allow scroll if content overflows */
+            
+            
         }
-        .modal-content {
-            background-color: #222;
-            margin: 15% auto;
-            padding: 20px;
-            border-radius: 8px;
-            width: 300px;
+         .modal-content {
+             background-color: #1a1a1a;
+            margin: 10% auto;
+            padding: 30px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 450px;
+             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
         }
+       
+
         input {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             margin: 10px 0;
             box-sizing: border-box;
             background-color: #333;
             border: none;
             color: #fff;
-            border-radius: 4px;
+            border-radius: 6px;
+              outline: none;
         }
-        #customVideoPlayer {
-            max-width: 80%;
-            max-height: 80%;
+        #videoModal video{
+             max-width: 90%;
+             max-height: 90%;
             margin: 5% auto;
             display: block;
-            background-color: #000;
+              background-color: #000;
         }
-        #videoContainer {
-            position: relative;
-            width: 100%;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        #customControls {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background-color: rgba(0, 0, 0, 0.5);
-            padding: 10px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        #customControls button {
-            background-color: transparent;
-            border: none;
-            color: #fff;
-            font-size: 16px;
-            margin: 0 10px;
-            cursor: pointer;
-        }
-        #progressBar {
-            width: 100%;
-            height: 5px;
-            background-color: #333;
-            cursor: pointer;
-        }
-        #progress {
-            width: 0;
-            height: 100%;
-            background-color: #007bff;
+        #videoModal {
+           display: flex;
+           justify-content: center;
+           align-items: center;
         }
     </style>
 </head>
@@ -143,20 +133,12 @@
         </div>
     </div>
 
-    <div id="videoModal">
-        <div id="videoContainer">
-            <video id="customVideoPlayer">
+     <div id="videoModal">
+         <video controls id="customVideoPlayer">
                 Your browser does not support the video tag.
             </video>
-            <div id="customControls">
-                <button id="playPauseBtn">Play</button>
-                <div id="progressBar">
-                    <div id="progress"></div>
-                </div>
-                <button id="fullscreenBtn">Fullscreen</button>
-            </div>
         </div>
-    </div>
+ 
 
     <script>
         const films = [
@@ -193,8 +175,8 @@
         function playTrailer(trailerSrc) {
             const videoPlayer = document.getElementById('customVideoPlayer');
             videoPlayer.src = trailerSrc;
-            document.getElementById('videoModal').style.display = 'block';
-            initializeVideoPlayer();
+             document.getElementById('videoModal').style.display = 'flex';
+             videoPlayer.play();
         }
 
         function login() {
@@ -208,70 +190,12 @@
                 if (movieSrc) {
                     const videoPlayer = document.getElementById('customVideoPlayer');
                     videoPlayer.src = movieSrc;
-                    document.getElementById('videoModal').style.display = 'block';
-                    initializeVideoPlayer();
+                    document.getElementById('videoModal').style.display = 'flex';
+                     videoPlayer.play();
                     sessionStorage.removeItem('currentMovie');
                 }
             } else {
                 alert('Invalid credentials. Access denied.');
-            }
-        }
-
-        function initializeVideoPlayer() {
-            const video = document.getElementById('customVideoPlayer');
-            const playPauseBtn = document.getElementById('playPauseBtn');
-            const fullscreenBtn = document.getElementById('fullscreenBtn');
-            const progressBar = document.getElementById('progressBar');
-            const progress = document.getElementById('progress');
-
-            playPauseBtn.addEventListener('click', togglePlayPause);
-            fullscreenBtn.addEventListener('click', toggleFullscreen);
-            progressBar.addEventListener('click', seek);
-            video.addEventListener('timeupdate', updateProgress);
-
-            function togglePlayPause() {
-                if (video.paused) {
-                    video.play();
-                    playPauseBtn.textContent = 'Pause';
-                } else {
-                    video.pause();
-                    playPauseBtn.textContent = 'Play';
-                }
-            }
-
-            function toggleFullscreen() {
-                if (!document.fullscreenElement) {
-                    if (video.requestFullscreen) {
-                        video.requestFullscreen();
-                    } else if (video.mozRequestFullScreen) {
-                        video.mozRequestFullScreen();
-                    } else if (video.webkitRequestFullscreen) {
-                        video.webkitRequestFullscreen();
-                    } else if (video.msRequestFullscreen) {
-                        video.msRequestFullscreen();
-                    }
-                } else {
-                    if (document.exitFullscreen) {
-                        document.exitFullscreen();
-                    } else if (document.mozCancelFullScreen) {
-                        document.mozCancelFullScreen();
-                    } else if (document.webkitExitFullscreen) {
-                        document.webkitExitFullscreen();
-                    } else if (document.msExitFullscreen) {
-                        document.msExitFullscreen();
-                    }
-                }
-            }
-
-            function seek(e) {
-                const percent = e.offsetX / this.offsetWidth;
-                video.currentTime = percent * video.duration;
-                progress.style.width = percent * 100 + '%';
-            }
-
-            function updateProgress() {
-                const percent = (video.currentTime / video.duration) * 100;
-                progress.style.width = percent + '%';
             }
         }
 
