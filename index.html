@@ -213,6 +213,7 @@
             overflow: hidden;
             max-height: 0;
             transition: max-height 0.3s ease;
+            margin-top: 10px; /* Added margin to separate from Behind the Scenes btn */
         }
         #devReleases ul.open {
             max-height: 500px;
@@ -310,11 +311,11 @@
                 year: 2025,
                 // Changed here: Replaced devReleases with acts and added behindTheScenes property
                 acts: [
-                    { name: "Act 1", url: "https://example.com/act1.zip" },
-                    { name: "Act 2", url: "https://example.com/act2.zip" },
-                    { name: "Act 3", url: "https://example.com/act3.zip" },
-                    { name: "Act 4", url: "https://example.com/act4.zip" },
-                    { name: "Act 5", url: "https://example.com/act5.zip" }
+                    { name: "Act 1", number: 1 },
+                    { name: "Act 2", number: 2 },
+                    { name: "Act 3", number: 3 },
+                    { name: "Act 4", number: 4 },
+                    { name: "Act 5", number: 5 }
                 ],
                  behindTheScenes: "trailers/body_in_night_behind_scenes.mp4",
                  length: '21:53'
@@ -345,13 +346,13 @@
                        buttonsHTML = `
                             ${ film.fullMovie ? `<a href="#" class="btn watch-now-btn" data-movie-src="${film.fullMovie}">Watch Now</a>` : ''}
                             ${ film.trailer ? `<a href="#" class="btn play-trailer-btn" data-trailer-src="${film.trailer}">Play Trailer</a>`: ''}
+                             ${ film.behindTheScenes ? `<a href="#" class="btn behind-scenes-btn" data-behind-scenes-src="${film.behindTheScenes}">Behind the Scenes</a>` : ''}
                              <div id="devReleases">
                                         <h3 onclick="toggleReleases(this)">Acts</h3>
                                         <ul>
-                                             ${film.acts ? film.acts.map(act => `<li><a href="${act.url}">${act.name}</a></li>`).join('') : ''}
+                                             ${film.acts ? film.acts.map(act => `<li><a href="#" onclick="playAct(${act.number})">${act.name}</a></li>`).join('') : ''}
                                         </ul>
                                     </div>
-                             ${ film.behindTheScenes ? `<a href="#" class="btn behind-scenes-btn" data-behind-scenes-src="${film.behindTheScenes}">Behind the Scenes</a>` : ''}
                             `;
 
                   } else {
@@ -445,7 +446,15 @@
            element.classList.toggle("open");
             ul.classList.toggle('open');
         }
-
+         function playAct(actNumber) {
+              const actSrc = `acts/Act${actNumber}tbitn.mp4`;
+             showLoading();
+             setTimeout(() => {
+               hideLoading();
+               document.getElementById('loginModal').style.display = 'block';
+                 sessionStorage.setItem('currentMovie', actSrc);
+           }, 500);
+        }
        function watchNow(movieSrc) {
           showLoading();
             setTimeout(() => {
