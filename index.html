@@ -304,21 +304,19 @@
             {
                 title: "The Body in the Night",
                 image: "video-capture-1019.40seg-6394.png",
-                description: "A chilling thriller where a body is found in the middle of the night, and a detective must race against time to find the killer. Development releases are available below!",
+                description: "A chilling thriller where a body is found in the middle of the night, and a detective must race against time to find the killer. Check out the available Acts, and Behind the Scenes down below!",
                 trailer: "trailers/body_in_night_trailer.mp4",
                 fullMovie: "movies/body_in_night.mp4",
                 year: 2025,
-                devReleases: [
-                    { name: "Release 1", url: "https://example.com/dev1.zip" },
-                    { name: "Release 2", url: "https://example.com/dev2.zip" },
-                    { name: "Release 3", url: "https://example.com/dev3.zip" },
-                    { name: "Release 4", url: "https://example.com/dev4.zip" },
-                    { name: "Release 5", url: "https://example.com/dev5.zip" },
-                    { name: "Release 6", url: "https://example.com/dev6.zip" },
-                    { name: "Release 7", url: "https://example.com/dev7.zip" },
-                    { name: "Release 8", url: "https://example.com/dev8.zip" },
-                    { name: "Release 9", url: "https://example.com/dev9.zip" },
+                // Changed here: Replaced devReleases with acts and added behindTheScenes property
+                acts: [
+                    { name: "Act 1", url: "https://example.com/act1.zip" },
+                    { name: "Act 2", url: "https://example.com/act2.zip" },
+                    { name: "Act 3", url: "https://example.com/act3.zip" },
+                    { name: "Act 4", url: "https://example.com/act4.zip" },
+                    { name: "Act 5", url: "https://example.com/act5.zip" }
                 ],
+                 behindTheScenes: "trailers/body_in_night_behind_scenes.mp4",
                  length: '21:53'
             },
             { title: "Goats in the outback", description: "A comedy adventure where a group of friends go looking for a missing herd of goats across Australia's desolate outback.", image: "video-capture-79.11seg-8714.png", fullMovie: "movies/goats_outback.mp4", year: 2024, length: '4:31' },
@@ -343,16 +341,19 @@
                  if (latest.includes(film) && !shownLatest) {
                      shownLatest = true;
                       filmCard.classList.add('latest-film');
-                      buttonsHTML = `
-                                    ${ film.fullMovie ? `<a href="#" class="btn watch-now-btn" data-movie-src="${film.fullMovie}">Watch Now</a>` : ''}
-                                    ${ film.trailer ? `<a href="#" class="btn play-trailer-btn" data-trailer-src="${film.trailer}">Play Trailer</a>`: ''}
-                                     <div id="devReleases">
-                                        <h3 onclick="toggleReleases(this)">Development Releases</h3>
+                      // Conditional rendering for Acts and Behind the Scenes
+                       buttonsHTML = `
+                            ${ film.fullMovie ? `<a href="#" class="btn watch-now-btn" data-movie-src="${film.fullMovie}">Watch Now</a>` : ''}
+                            ${ film.trailer ? `<a href="#" class="btn play-trailer-btn" data-trailer-src="${film.trailer}">Play Trailer</a>`: ''}
+                             <div id="devReleases">
+                                        <h3 onclick="toggleReleases(this)">Acts</h3>
                                         <ul>
-                                            ${film.devReleases ? film.devReleases.map(release => `<li><a href="${release.url}">${release.name}</a></li>`).join('') : ''}
+                                             ${film.acts ? film.acts.map(act => `<li><a href="${act.url}">${act.name}</a></li>`).join('') : ''}
                                         </ul>
                                     </div>
+                             ${ film.behindTheScenes ? `<a href="#" class="btn behind-scenes-btn" data-behind-scenes-src="${film.behindTheScenes}">Behind the Scenes</a>` : ''}
                             `;
+
                   } else {
                         buttonsHTML = `
                              ${ film.fullMovie ? `<a href="#" class="btn watch-now-btn" data-movie-src="${film.fullMovie}">Watch Now</a>` : ''}
@@ -380,7 +381,9 @@
                filmCards.forEach(card => {
                   const watchNowBtn = card.querySelector('.watch-now-btn');
                  const playTrailerBtn = card.querySelector('.play-trailer-btn');
-                 const devReleases = card.querySelector("#devReleases h3");
+                   const behindScenesBtn = card.querySelector('.behind-scenes-btn');
+                   const devReleases = card.querySelector("#devReleases h3");
+
                  if (watchNowBtn) {
                     watchNowBtn.addEventListener('click', (event) => {
                          event.stopPropagation();
@@ -395,6 +398,13 @@
                            playTrailer(trailerSrc);
                         });
                    }
+                    if (behindScenesBtn) {
+                      behindScenesBtn.addEventListener('click', (event) => {
+                           event.stopPropagation();
+                        const behindScenesSrc = event.currentTarget.getAttribute('data-behind-scenes-src');
+                            playTrailer(behindScenesSrc);
+                         });
+                     }
                    if(devReleases) {
                        devReleases.addEventListener('click', (event) => {
                             event.stopPropagation();
