@@ -5,405 +5,478 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <title>ADS Films Streaming</title>
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="manifest" href="/site.webmanifest">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
-    <style>
+    <link href="https://vjs.zencdn.net/8.6.1/video-js.css" rel="stylesheet" />
+     <style>
         body {
-            font-family: 'Roboto', sans-serif;                           
+            font-family: 'Roboto', sans-serif;
             background-color: #0a0a0a;
             color: #fff;
             margin: 0;
-            padding: 0; /* Removed top padding for nav */
+            padding: 0;
             transition: background-color 0.3s ease;
         }
-        body:hover {
-            background-color: #000;
+           body.light-theme {
+               background-color: #f9f9f9;
+               color: #333;
+           }
+           body:hover {
+               background-color: #000;
+           }
+           body.light-theme:hover {
+               background-color: #e0e0e0;
+           }
+           nav {
+               background-color: #1a1a1a;
+               padding: 15px 20px;
+               display: flex;
+               justify-content: space-between;
+               align-items: center;
+               margin-bottom: 20px;
+           }
+             nav.light-theme {
+            background-color: #d0d0d0;
         }
-        /* Navbar styles */
-        nav {
-            background-color: #1a1a1a;
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px; /* Added margin below navbar */
+           nav h1 {
+               margin: 0;
+           }
+           nav ul {
+               list-style: none;
+               padding: 0;
+               display: flex;
+               gap: 20px;
+           }
+          nav.light-theme a{
+            color: #333;
         }
-        nav h1 {
-            margin: 0;
-        }
-        nav ul {
-            list-style: none;
-            padding: 0;
-            display: flex;
-            gap: 20px;
-        }
-        nav a {
-            color: #f0f0f0;
-            text-decoration: none;
-            font-weight: 400;
-        }
+           nav a {
+               color: #f0f0f0;
+               text-decoration: none;
+               font-weight: 400;
+           }
 
-        h1 {
-            text-align: center;
-            font-weight: 700;
-            margin-bottom: 30px;
-            color: #f0f0f0;
+           h1 {
+               text-align: center;
+               font-weight: 700;
+               margin-bottom: 30px;
+               color: #f0f0f0;
+           }
+        h1.light-theme{
+            color: #333;
         }
-        #searchBar {
-            width: 95%;
-            max-width: 500px;
-            margin: 0 auto 20px;
-            padding: 12px;
-            box-sizing: border-box;
-            background-color: #333;
-            border: none;
-            color: #fff;
-            border-radius: 6px;
-            outline: none;
-            display: block;
+           #searchBar {
+               width: 95%;
+               max-width: 500px;
+               margin: 0 auto 20px;
+               padding: 12px;
+               box-sizing: border-box;
+               background-color: #333;
+               border: none;
+               color: #fff;
+               border-radius: 6px;
+               outline: none;
+               display: block;
+           }
+         #searchBar.light-theme {
+             background-color: #d0d0d0;
+            color: #333;
         }
-        .film-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 25px;
-            padding: 20px; /* Added left padding for filmGrid container */
-        }
-        .film-card {
-            background-color: #1a1a1a;
-            border-radius: 12px;
-            overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            position: relative;
-            cursor: pointer;
-        }
-        .film-card.latest-film .latest-label {
-            top: 5px;
-            left: 5px;
-            font-size: 0.7rem;
-            padding: 3px 6px;
-        }
-        .latest-label {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background-color: #e74c3c;
-            color: white;
-            padding: 5px 8px;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            font-weight: bold;
-            z-index: 2;
-        }
-        .film-card.latest-film::before {
-            content: '';
-            position: absolute;
-            top: -10px;
-            left: -10px;
-            right: -10px;
-            bottom: -10px;
-            border: 3px solid #e74c3c;
-            border-radius: 14px;
-            z-index: 1;
-            pointer-events: none;
-        }
-        .film-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(255, 255, 255, 0.1);
-        }
-        .film-card img {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-            display: block;
-        }
-        .film-info {
-            padding: 15px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            min-height: 120px;
-        }
-        .film-title {
-            font-weight: 500;
-            margin-bottom: 15px;
-            font-size: 1.1rem;
-        }
-        .btn {
-            display: inline-block;
-            padding: 10px 20px;
-            margin: 5px 0;
-            background-color: #3498db;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            text-align: center;
-            border: none;
-            font-size: 0.9rem;
-        }
-        .btn:hover {
-            background-color: #2980b9;
-        }
-        #loginModal, #videoModal, #filmDetailsModal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.8);
-            overflow: auto;
-            justify-content: center;
-            align-items: center;
-        }
-        .modal-content {
-            background-color: #1a1a1a;
-            margin: 10% auto;
-            padding: 30px;
-            border-radius: 12px;
-            width: 90%;
-            max-width: 450px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-            overflow: auto;
-        }
-        #filmDetailsModal .modal-content {
-            max-width: 700px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        #filmDetailsModal .modal-content img{
-            width: 100%;
-            max-height: 300px;
-            object-fit: cover;
-            border-radius: 10px;
-            margin-bottom: 20px;
-        }
-        #filmDetailsModal .modal-content p{
-            text-align: left;
-            line-height: 1.6;
-            margin-bottom: 20px;
-            max-width: 600px;
-        }
-        input {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            box-sizing: border-box;
-            background-color: #333;
-            border: none;
-            color: #fff;
-            border-radius: 6px;
-            outline: none;
-        }
-        #videoModal video{
-             max-width: 90%;
-            max-height: 90%;
-            margin: 5% auto;
-            display: block;
-            background-color: #000;
-        }
-        #videoModal {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        #devReleases {
-            margin-top: 15px;
-            text-align: center;
-        }
-         #devReleases h3 {
-             color: #bbb;
-            margin-bottom: 5px;
-            font-weight: bold;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            user-select: none;
-        }
-         #devReleases h3::after {
-            content: '▼';
-            margin-left: 5px;
-            transition: transform 0.3s ease;
-            display: inline-block;
-        }
-        #devReleases h3.open::after{
-             transform: rotate(180deg);
+           .film-grid {
+               display: grid;
+               grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+               gap: 25px;
+               padding: 20px;
+           }
+           .film-card {
+               background-color: #1a1a1a;
+               border-radius: 12px;
+               overflow: hidden;
+               transition: transform 0.3s ease, box-shadow 0.3s ease;
+               box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+               position: relative;
+               cursor: pointer;
+           }
+              .film-card.light-theme {
+               background-color: #d0d0d0;
+           }
+           .film-card.latest-film .latest-label {
+               top: 5px;
+               left: 5px;
+               font-size: 0.7rem;
+               padding: 3px 6px;
+           }
+           .latest-label {
+               position: absolute;
+               top: 10px;
+               left: 10px;
+               background-color: #e74c3c;
+               color: white;
+               padding: 5px 8px;
+               border-radius: 4px;
+               font-size: 0.8rem;
+               font-weight: bold;
+               z-index: 2;
+           }
+           .film-card.latest-film::before {
+               content: '';
+               position: absolute;
+               top: -10px;
+               left: -10px;
+               right: -10px;
+               bottom: -10px;
+               border: 3px solid #e74c3c;
+               border-radius: 14px;
+               z-index: 1;
+               pointer-events: none;
+           }
+           .film-card:hover {
+               transform: translateY(-5px);
+               box-shadow: 0 8px 20px rgba(255, 255, 255, 0.1);
+           }
+           .film-card img {
+               width: 100%;
+               height: 250px;
+               object-fit: cover;
+               display: block;
+           }
+           .film-info {
+               padding: 15px;
+               display: flex;
+               flex-direction: column;
+               justify-content: space-between;
+               min-height: 120px;
+           }
+          .film-info.light-theme{
+            color: #333;
          }
-        #devReleases ul {
-            list-style: none;
-            padding: 0;
-            overflow: hidden;
-            max-height: 0;
-            transition: max-height 0.3s ease;
-            margin-top: 10px;
+           .film-title {
+               font-weight: 500;
+               margin-bottom: 15px;
+               font-size: 1.1rem;
+           }
+         .film-title.light-theme{
+              color: #333;
+         }
+           .btn {
+               display: inline-block;
+               padding: 10px 20px;
+               margin: 5px 0;
+               background-color: #3498db;
+               color: #fff;
+               text-decoration: none;
+               border-radius: 6px;
+               cursor: pointer;
+               transition: background-color 0.3s ease;
+               text-align: center;
+               border: none;
+               font-size: 0.9rem;
+           }
+           .btn:hover {
+               background-color: #2980b9;
+           }
+          .btn.light-theme {
+              background-color: #5599de;
+             color: #333;
+         }
+           .btn.light-theme:hover {
+              background-color: #5599be;
+         }
+           #loginModal, #videoModal, #filmDetailsModal {
+               display: none;
+               position: fixed;
+               z-index: 1000;
+               left: 0;
+               top: 0;
+               width: 100%;
+               height: 100%;
+               background-color: rgba(0,0,0,0.8);
+               overflow: auto;
+               justify-content: center;
+               align-items: center;
+           }
+           .modal-content {
+               background-color: #1a1a1a;
+               margin: 10% auto;
+               padding: 30px;
+               border-radius: 12px;
+               width: 90%;
+               max-width: 450px;
+               box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+               overflow: auto;
+           }
+         .modal-content.light-theme {
+            background-color: #d0d0d0;
         }
-        #devReleases ul.open {
-            max-height: 500px;
-        }
-       #devReleases li {
-            margin-bottom: 8px;
-        }
-        #devReleases a {
-            color: #3498db;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-        #devReleases a:hover {
-           color: #2980b9;
-        }
-        .loading-overlay {
+           #filmDetailsModal .modal-content {
+               max-width: 700px;
+               display: flex;
+               flex-direction: column;
+               align-items: center;
+           }
+           #filmDetailsModal .modal-content img{
+               width: 100%;
+               max-height: 300px;
+               object-fit: cover;
+               border-radius: 10px;
+               margin-bottom: 20px;
+           }
+           #filmDetailsModal .modal-content p{
+               text-align: left;
+               line-height: 1.6;
+               margin-bottom: 20px;
+               max-width: 600px;
+           }
+           input {
+               width: 100%;
+               padding: 12px;
+               margin: 10px 0;
+               box-sizing: border-box;
+               background-color: #333;
+               border: none;
+               color: #fff;
+               border-radius: 6px;
+               outline: none;
+           }
+          input.light-theme{
+              background-color: #d0d0d0;
+             color: #333;
+         }
+           #videoModal .video-js {
+            max-width: 90%;
+             max-height: 90%;
+             margin: 5% auto;
+             display: block;
+             background-color: #000;
+           }
+           #videoModal {
+               display: flex;
+               justify-content: center;
+               align-items: center;
+           }
+           #devReleases {
+               margin-top: 15px;
+               text-align: center;
+           }
+            #devReleases h3 {
+                color: #bbb;
+               margin-bottom: 5px;
+               font-weight: bold;
+               cursor: pointer;
+               display: inline-flex;
+               align-items: center;
+               user-select: none;
+           }
+            #devReleases h3::after {
+               content: '▼';
+               margin-left: 5px;
+               transition: transform 0.3s ease;
+               display: inline-block;
+           }
+           #devReleases h3.open::after{
+                transform: rotate(180deg);
+            }
+           #devReleases ul {
+               list-style: none;
+               padding: 0;
+               overflow: hidden;
+               max-height: 0;
+               transition: max-height 0.3s ease;
+               margin-top: 10px;
+           }
+           #devReleases ul.open {
+               max-height: 500px;
+           }
+          #devReleases li {
+               margin-bottom: 8px;
+           }
+           #devReleases a {
+               color: #3498db;
+               text-decoration: none;
+               transition: color 0.3s ease;
+           }
+           #devReleases a:hover {
+              color: #2980b9;
+           }
+           .loading-overlay {
+                position: fixed;
+               top: 0;
+                left: 0;
+              width: 100%;
+              height: 100%;
+              background-color: rgba(0,0,0,0.8);
+              display: none;
+               justify-content: center;
+               align-items: center;
+               z-index: 1001;
+            }
+            .loader {
+              border: 5px solid #333;
+              border-top: 5px solid #3498db;
+              border-radius: 50%;
+               width: 50px;
+               height: 50px;
+              animation: spin 1s linear infinite;
+           }
+           @keyframes spin {
+               0% {transform: rotate(0deg);}
+              100% {transform: rotate(360deg);}
+           }
+           .film-card .video-length {
+               position: absolute;
+               bottom: 10px;
+               left: 10px;
+               background-color: rgba(0, 0, 0, 0.7);
+               color: white;
+               padding: 3px 6px;
+               font-size: 0.8rem;
+                border-radius: 4px;
+           }
+        footer {
              position: fixed;
-            top: 0;
-             left: 0;
-           width: 100%;
-           height: 100%;
-           background-color: rgba(0,0,0,0.8);
-           display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 1001;
-         }
-         .loader {
-           border: 5px solid #333;
-           border-top: 5px solid #3498db;
-           border-radius: 50%;
-            width: 50px;
-            height: 50px;
-           animation: spin 1s linear infinite;
+             left: 20px;
+             bottom: 10px;
+            font-size: 0.8em;
+             opacity: 0.7;
         }
-        @keyframes spin {
-            0% {transform: rotate(0deg);}
-           100% {transform: rotate(360deg);}
-        }
-        .film-card .video-length {
-            position: absolute;
+         .theme-toggle {
+              position: fixed;
+             right: 20px;
             bottom: 10px;
-            left: 10px;
-            background-color: rgba(0, 0, 0, 0.7);
-            color: white;
-            padding: 3px 6px;
-            font-size: 0.8rem;
-             border-radius: 4px;
-        }
-        /* Plyr Specific CSS */
-        .plyr__video-wrapper{
-            max-height: 80vh;
-        }
+             cursor: pointer;
+             border: 1px solid white;
+              border-radius: 5px;
+             padding: 5px 10px;
+            user-select: none;
+         }
+          .theme-toggle.light-theme{
+             border: 1px solid #333;
+             color: #333;
+         }
     </style>
 </head>
 <body>
-    <div class="loading-overlay" id="loadingOverlay">
-        <div class="loader"></div>
+<div class="loading-overlay" id="loadingOverlay">
+    <div class="loader"></div>
+</div>
+
+<nav>
+    <h1>ADS Films Streaming</h1>
+    <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Movies</a></li>
+    </ul>
+</nav>
+
+<input type="text" id="searchBar" placeholder="Search Films...">
+
+<div id="filmGridContainer">
+
+</div>
+
+
+<div id="loginModal" aria-modal="true" aria-labelledby="loginModalTitle" role="dialog">
+    <div class="modal-content">
+        <h2 id="loginModalTitle">Login Required</h2>
+        <input type="text" id="username" placeholder="Username" aria-label="Username">
+        <input type="password" id="password" placeholder="Password" aria-label="Password">
+        <button class="btn" onclick="login()" aria-label="Login">Login</button>
     </div>
+</div>
 
-    <nav>
-        <h1>ADS Films Streaming</h1>
-        <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Movies</a></li>
-        </ul>
-    </nav>
-   
-    <input type="text" id="searchBar" placeholder="Search Films...">
+<div id="videoModal" aria-modal="true" role="dialog">
+     <div class="modal-content">
+         <video
+                id="customVideoPlayer"
+                class="video-js vjs-default-skin"
+                controls
+                preload="auto"
+            >
+            <p class="vjs-no-js">
+            To view this video please enable JavaScript, and consider upgrading to a web browser that
+            <a href="https://videojs.com/html5-video-support/" target="_blank"
+            >supports HTML5 video</a
+            >
+          </p>
+      </video>
+     </div>
+</div>
 
-    <div id="filmGridContainer">
-        
+<div id="filmDetailsModal" aria-modal="true" role="dialog">
+    <div class="modal-content">
+
     </div>
+</div>
+<footer>
+    © ADS Films 2025
+</footer>
+<div class="theme-toggle" onclick="toggleTheme()">
+    Light Theme
+</div>
+<script src="https://vjs.zencdn.net/8.6.1/video.min.js"></script>
+<script>
+    const films = [
+        {
+            title: "The Body in the Night",
+            image: "video-capture-1019.40seg-6394.png",
+            description: "Our Familiar detectives are placed in a new environement and a complex new murder takes place. Check out the available Acts, and Behind the Scenes down below!",
+            trailer: "trailers/body_in_night_trailer.mp4",
+            fullMovie: "movies/body_in_night.mp4",
+            year: 2025,
 
+            acts: [
+                { name: "Act 1", number: 1 },
+                { name: "Act 2", number: 2 },
+                { name: "Act 3", number: 3 },
+                { name: "Act 4", number: 4 },
+                { name: "Act 5", number: 5 }
+            ],
+             behindTheScenes: "trailers/body_in_night_behind_scenes.mp4",
+             length: '21:53'
+        },
+        { title: "Goats in the outback", description: "A comedy", image: "video-capture-79.11seg-8714.png", fullMovie: "movies/goats_outback.mp4", year: 2024, length: '4:31' },
+        { title: "Detectives at a Dead End", description: "Sam, Ron and William return for a nail-biting detective mystery where old foes return", image: "video-capture-362.32seg-6905.png", fullMovie: "movies/detectives_dead_end.mp4", year: 2024, length: '15:02' },
+        { title: "On our own", description: "Sam meets his cousin in Australia - when their parents dissapear!", image: "video-capture-544.63seg-2710.png", year: 2023, length: 'Video lost', message: "Unfortunately this video's recording has been lost." },
+         { title: "The Issue With Crime", description: "The first real ADS Film - Sam, Ron and William have to work together to defeat the evil Mr. Clarkson, while staying safe themselves.", image: "video-capture-85.83seg-6017.png", trailer: "movies/The%20issue%20with%20crime%20trailer.mp4", fullMovie: "movies/issue_with_crime.mp4", year: 2023, length: 'approx 15 minutes', message:"Please be aware that the latter half of this film is lost." },
+        { title: "Death on the Fjord", description: "The heroes from the Caravan adventures stories are hired in Norway by an endangered woman!", image: "video-capture-551.73seg-6341.png", fullMovie: "movies/doft.mp4", year: 2021, length: '20:44' }
+    ];
 
-    <div id="loginModal" aria-modal="true" aria-labelledby="loginModalTitle" role="dialog">
-        <div class="modal-content">
-            <h2 id="loginModalTitle">Login Required</h2>
-            <input type="text" id="username" placeholder="Username" aria-label="Username">
-            <input type="password" id="password" placeholder="Password" aria-label="Password">
-            <button class="btn" onclick="login()" aria-label="Login">Login</button>
-        </div>
-    </div>
+    function displayFilms() {
+        const filmGridContainer = document.getElementById('filmGridContainer');
+        const filmGrid = document.createElement('div');
+        filmGrid.className = 'film-grid';
+        filmGridContainer.appendChild(filmGrid);
 
-    <div id="videoModal" aria-modal="true" role="dialog">
-         <div class="modal-content">
-             <div class="js-player" data-plyr-provider="html5" >
-                <video controls id="customVideoPlayer">
-                 Your browser does not support the video tag.
-                 </video>
-             </div>
-            </div>
-    </div>
+        const latest = films.slice().sort((a,b) => b.year - a.year).slice(0,2);
+        let shownLatest = false;
+        films.forEach(film => {
+            const filmCard = document.createElement('div');
+            filmCard.className = 'film-card';
+            let buttonsHTML = "";
+            if (latest.includes(film) && !shownLatest) {
+                shownLatest = true;
+                filmCard.classList.add('latest-film');
+            }
 
-    <div id="filmDetailsModal" aria-modal="true" role="dialog">
-        <div class="modal-content">
-
-        </div>
-    </div>
-    <script src="https://cdn.plyr.io/3.7.8/plyr.js"></script>
-    <script>
-        const films = [
-            {
-                title: "The Body in the Night",
-                image: "video-capture-1019.40seg-6394.png",
-                description: "Our Familiar detectives are placed in a new environement and a complex new murder takes place. Check out the available Acts, and Behind the Scenes down below!",
-                trailer: "trailers/body_in_night_trailer.mp4",
-                fullMovie: "movies/body_in_night.mp4",
-                year: 2025,
-
-                acts: [
-                    { name: "Act 1", number: 1 },
-                    { name: "Act 2", number: 2 },
-                    { name: "Act 3", number: 3 },
-                    { name: "Act 4", number: 4 },
-                    { name: "Act 5", number: 5 }
-                ],
-                 behindTheScenes: "trailers/body_in_night_behind_scenes.mp4",
-                 length: '21:53'
-            },
-            { title: "Goats in the outback", description: "A comedy", image: "video-capture-79.11seg-8714.png", fullMovie: "movies/goats_outback.mp4", year: 2024, length: '4:31' },
-            { title: "Detectives at a Dead End", description: "Sam, Ron and William return for a nail-biting detective mystery where old foes return", image: "video-capture-362.32seg-6905.png", fullMovie: "movies/detectives_dead_end.mp4", year: 2024, length: '15:02' },
-            { title: "On our own", description: "Sam meets his cousin in Australia - when their parents dissapear!", image: "video-capture-544.63seg-2710.png", year: 2023, length: 'Video lost', message: "Unfortunately this video's recording has been lost." },
-             { title: "The Issue With Crime", description: "The first real ADS Film - Sam, Ron and William have to work together to defeat the evil Mr. Clarkson, while staying safe themselves.", image: "video-capture-85.83seg-6017.png", trailer: "movies/The%20issue%20with%20crime%20trailer.mp4", fullMovie: "movies/issue_with_crime.mp4", year: 2023, length: 'approx 15 minutes', message:"Please be aware that the latter half of this film is lost." },
-            { title: "Death on the Fjord", description: "The heroes from the Caravan adventures stories are hired in Norway by an endangered woman!", image: "video-capture-551.73seg-6341.png", fullMovie: "movies/doft.mp4", year: 2021, length: '20:44' }
-        ];
-
-         function displayFilms() {
-             const filmGridContainer = document.getElementById('filmGridContainer');
-            const filmGrid = document.createElement('div');
-            filmGrid.className = 'film-grid';
-             filmGridContainer.appendChild(filmGrid);
-
-             const latest = films.slice().sort((a,b) => b.year - a.year).slice(0,2);
-             let shownLatest = false;
-           films.forEach(film => {
-                 const filmCard = document.createElement('div');
-                filmCard.className = 'film-card';
-                 let buttonsHTML = "";
-                 if (latest.includes(film) && !shownLatest) {
-                     shownLatest = true;
-                      filmCard.classList.add('latest-film');
-                 }
-
-                 buttonsHTML = `
+            buttonsHTML = `
                     ${ film.fullMovie ? `<button class="btn watch-now-btn" data-movie-src="${film.fullMovie}" aria-label="Watch Now for ${film.title}">Watch Now</button>` : ''}
                    ${ film.trailer ? `<button class="btn play-trailer-btn" data-trailer-src="${film.trailer}" aria-label="Play Trailer for ${film.title}">Play Trailer</button>`: ''}
                     ${ film.behindTheScenes ? `<button class="btn behind-scenes-btn" data-behind-scenes-src="${film.behindTheScenes}" aria-label="Play Behind the Scenes for ${film.title}">Behind the Scenes</button>` : ''}
                   ${film.acts ?
-                       `<div id="devReleases" >
+                    `<div id="devReleases" >
                              <h3 onclick="toggleReleases(this)"  aria-controls="actsList-${film.title.replace(/[^a-z0-9]/gi, '')}" >Acts</h3>
                              <ul id="actsList-${film.title.replace(/[^a-z0-9]/gi, '')}" >
                                   ${film.acts.map(act => `<li><button onclick="playAct('${act.number}')" aria-label="Play ${act.name}">${act.name}</button></li>`).join('')}
                                  </ul>
                          </div>`
-                        : ''}
+                    : ''}
 
                 `;
 
-                 filmCard.innerHTML = `
+            filmCard.innerHTML = `
                             ${latest.includes(film) && !shownLatest ? `<span class="latest-label">Latest</span>` : ''}
                                 <img src="${film.image}" alt="${film.title}">
                                  <span class="video-length">${film.length}</span>
@@ -412,154 +485,245 @@
                                    ${buttonsHTML}
                                 </div>
                             `;
-                 filmCard.onclick = () => showFilmDetails(film);
-                filmGrid.appendChild(filmCard);
-           });
-            setupFilmCardInteractions();
-            setupSearchFunctionality();
-        }
-         function setupFilmCardInteractions() {
-            const filmCards = document.querySelectorAll('.film-card');
-               filmCards.forEach(card => {
-                    const buttons = card.querySelectorAll("button[class*='btn']");
-                   buttons.forEach(button => {
-                        button.addEventListener("click", (event) => {
-                         event.stopPropagation();
-                           const dataset = event.currentTarget.dataset;
-                           if(dataset.movieSrc) {
-                              watchNow(dataset.movieSrc);
-                           }
-                            if(dataset.trailerSrc || dataset.behindScenesSrc) {
-                                  playTrailer(dataset.trailerSrc || dataset.behindScenesSrc);
-                            }
-                       })
-                    })
-             });
-        }
-
-         function setupSearchFunctionality() {
-            const searchBar = document.getElementById("searchBar");
-            searchBar.addEventListener("input", (e) => {
-               const searchTerm = e.target.value.toLowerCase();
-                const filmCards = document.querySelectorAll(".film-card");
-                filmCards.forEach(card => {
-                    const title = card.querySelector(".film-title").textContent.toLowerCase();
-                    if (title.includes(searchTerm)) {
-                        card.style.display = "";
-                    } else {
-                         card.style.display = "none";
-                    }
-                 });
+             const filmCardTheme = localStorage.getItem('theme') === 'light-theme' ? 'light-theme' : '';
+            filmCard.classList.add(filmCardTheme);
+              const filmInfo = filmCard.querySelector('.film-info');
+              filmInfo.classList.add(filmCardTheme);
+              const filmTitle = filmCard.querySelector('.film-title');
+              filmTitle.classList.add(filmCardTheme);
+            const buttonTheme = localStorage.getItem('theme') === 'light-theme' ? 'light-theme' : '';
+            const buttons = filmCard.querySelectorAll('.btn');
+            buttons.forEach(button => {
+                button.classList.add(buttonTheme);
             });
-        }
-        function showFilmDetails(film) {
-           const detailsModal = document.getElementById('filmDetailsModal');
-            const modalContent = detailsModal.querySelector('.modal-content');
-            modalContent.innerHTML = `
+            filmCard.onclick = () => showFilmDetails(film);
+            filmGrid.appendChild(filmCard);
+        });
+        setupFilmCardInteractions();
+        setupSearchFunctionality();
+           const filmGridTheme = localStorage.getItem('theme') === 'light-theme' ? 'light-theme' : '';
+            const filmGridContainerEl = document.getElementById('filmGridContainer');
+            filmGridContainerEl.classList.add(filmGridTheme)
+    }
+    function setupFilmCardInteractions() {
+        const filmCards = document.querySelectorAll('.film-card');
+        filmCards.forEach(card => {
+            const buttons = card.querySelectorAll("button[class*='btn']");
+            buttons.forEach(button => {
+                button.addEventListener("click", (event) => {
+                    event.stopPropagation();
+                    const dataset = event.currentTarget.dataset;
+                    if(dataset.movieSrc) {
+                        watchNow(dataset.movieSrc);
+                    }
+                    if(dataset.trailerSrc || dataset.behindScenesSrc) {
+                        playTrailer(dataset.trailerSrc || dataset.behindScenesSrc);
+                    }
+                })
+            })
+        });
+    }
+
+    function setupSearchFunctionality() {
+        const searchBar = document.getElementById("searchBar");
+         const searchBarTheme = localStorage.getItem('theme') === 'light-theme' ? 'light-theme' : '';
+             searchBar.classList.add(searchBarTheme);
+        searchBar.addEventListener("input", (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            const filmCards = document.querySelectorAll(".film-card");
+            filmCards.forEach(card => {
+                const title = card.querySelector(".film-title").textContent.toLowerCase();
+                if (title.includes(searchTerm)) {
+                    card.style.display = "";
+                } else {
+                    card.style.display = "none";
+                }
+            });
+        });
+    }
+    function showFilmDetails(film) {
+        const detailsModal = document.getElementById('filmDetailsModal');
+        const modalContent = detailsModal.querySelector('.modal-content');
+             const detailsModalTheme = localStorage.getItem('theme') === 'light-theme' ? 'light-theme' : '';
+             modalContent.classList.add(detailsModalTheme);
+        modalContent.innerHTML = `
                     <img src="${film.image}" alt="${film.title}">
                      <h2>${film.title}</h2>
                     <p>${film.description}</p>
                     <p style="color: #e74c3c">${film.message || ''}</p>
                     <button class="btn" onclick="document.getElementById('filmDetailsModal').style.display = 'none'" aria-label="Close Film Details">Close</button>
            `;
-          detailsModal.style.display = 'flex';
-        }
-        function toggleReleases(element) {
-            const ul = element.nextElementSibling;
-           element.classList.toggle("open");
-            ul.classList.toggle('open');
-        }
-         function playAct(actNumber) {
-              const actSrc = `acts/Act${actNumber}tbitn.mp4`;
-             showLoading();
-             setTimeout(() => {
-               hideLoading();
-               document.getElementById('loginModal').style.display = 'block';
-                 sessionStorage.setItem('currentMovie', actSrc);
-           }, 500);
-        }
-       function watchNow(movieSrc) {
-          showLoading();
-            setTimeout(() => {
-               hideLoading();
-                document.getElementById('loginModal').style.display = 'block';
-                 sessionStorage.setItem('currentMovie', movieSrc);
-           }, 500)
-       }
-        function initializePlyr(videoModal, videoSrc){
-              const videoPlayer = document.getElementById('customVideoPlayer');
-                videoPlayer.src = videoSrc;
-                 if(videoModal.plyr) {
-                     videoModal.plyr.destroy();
-                 }
-                videoModal.plyr = new Plyr(videoModal.querySelector('.js-player'), {
-                      listeners: {
-                            play: function(){},
-                            pause: function(){},
-                            error: (event) => {
-                                  console.error('Plyr error:', event);
-                                  alert("There was an error loading this video. Please try again later")
-                                  videoModal.style.display = "none";
-                             }
-                     }
-                 });
+        detailsModal.style.display = 'flex';
+    }
+    function toggleReleases(element) {
+        const ul = element.nextElementSibling;
+        element.classList.toggle("open");
+        ul.classList.toggle('open');
+    }
+    function playAct(actNumber) {
+        const actSrc = `acts/Act${actNumber}tbitn.mp4`;
+        showLoading();
+        setTimeout(() => {
+            hideLoading();
+            document.getElementById('loginModal').style.display = 'block';
+            sessionStorage.setItem('currentMovie', actSrc);
+        }, 500);
+    }
+    function watchNow(movieSrc) {
+        showLoading();
+        setTimeout(() => {
+            hideLoading();
+            document.getElementById('loginModal').style.display = 'block';
+            sessionStorage.setItem('currentMovie', movieSrc);
+        }, 500)
+    }
+    function initializeVideoJS(videoModal, videoSrc){
+            const videoPlayer = document.getElementById('customVideoPlayer');
+                videoPlayer.src = videoSrc
+            const videoJsPlayer = videojs(videoPlayer);
+            videoModal.videoJsPlayer = videoJsPlayer;
+             videoJsPlayer.on("error", (event) => {
+                   console.error('VideoJS error:', event);
+                   alert("There was an error loading this video. Please try again later")
+                     videoModal.style.display = "none";
+             });
+    }
+    function playTrailer(trailerSrc) {
+        showLoading();
+        setTimeout(() => {
+            hideLoading();
+            const videoModal = document.getElementById('videoModal');
+           initializeVideoJS(videoModal, trailerSrc)
+            videoModal.style.display = 'flex';
+            const videoModalTheme = localStorage.getItem('theme') === 'light-theme' ? 'light-theme' : '';
+             const videoModalElement = document.getElementById('videoModal').querySelector('.modal-content')
+             videoModalElement.classList.add(videoModalTheme);
 
-         videoModal.plyr.on('ready', (event) => {
-                  //videoModal.plyr.play(); //Autoplays the video
-             })
-        }
-        function playTrailer(trailerSrc) {
-             showLoading();
-           setTimeout(() => {
-               hideLoading();
-               const videoModal = document.getElementById('videoModal');
-              initializePlyr(videoModal, trailerSrc);
-                videoModal.style.display = 'flex';
+        }, 500)
+    }
+    function login() {
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+         const loginModalTheme = localStorage.getItem('theme') === 'light-theme' ? 'light-theme' : '';
+             const loginModalContent = document.getElementById('loginModal').querySelector('.modal-content')
+             loginModalContent.classList.add(loginModalTheme);
 
-            }, 500)
-        }
-         function login() {
-            const username = document.getElementById('username').value;
-           const password = document.getElementById('password').value;
-
-            if ((username === 'QuizzityMC' && password === 'ADS2024t1') ||
-               (username === 'user' && password === 'test')) {
-                document.getElementById('loginModal').style.display = 'none';
-               const movieSrc = sessionStorage.getItem('currentMovie');
-                if (movieSrc) {
-                     const videoModal = document.getElementById('videoModal');
-                      initializePlyr(videoModal, movieSrc);
-                   videoModal.style.display = 'flex';
-                   sessionStorage.removeItem('currentMovie');
-                }
-           } else {
-               alert('Invalid credentials. Access denied.');
-           }
-       }
-
-        window.onclick = function(event) {
-            if (event.target == document.getElementById('loginModal')) {
-                document.getElementById('loginModal').style.display = 'none';
-            }
-            if (event.target == document.getElementById('videoModal')) {
-               document.getElementById('videoModal').style.display = 'none';
+        if ((username === 'QuizzityMC' && password === 'ADS2024t1') ||
+            (username === 'user' && password === 'test')) {
+            document.getElementById('loginModal').style.display = 'none';
+            const movieSrc = sessionStorage.getItem('currentMovie');
+            if (movieSrc) {
                  const videoModal = document.getElementById('videoModal');
-               if(videoModal.plyr)
-                 videoModal.plyr.destroy();
-           }
-           if(event.target == document.getElementById("filmDetailsModal")) {
-                document.getElementById("filmDetailsModal").style.display = "none";
-           }
-       }
+                initializeVideoJS(videoModal, movieSrc)
+                videoModal.style.display = 'flex';
+                sessionStorage.removeItem('currentMovie');
+            }
+        } else {
+            alert('Invalid credentials. Access denied.');
+        }
+    }
 
-         function showLoading() {
-            document.getElementById('loadingOverlay').style.display = 'flex';
-         }
-        function hideLoading() {
-             document.getElementById('loadingOverlay').style.display = 'none';
-         }
+    window.onclick = function(event) {
+          const loginModalTheme = localStorage.getItem('theme') === 'light-theme' ? 'light-theme' : '';
+               const loginModalContent = document.getElementById('loginModal').querySelector('.modal-content');
+               const loginModal = document.getElementById('loginModal');
+        if (event.target == loginModal) {
+            loginModal.style.display = 'none';
+            loginModalContent.classList.remove(loginModalTheme);
+        }
+          const videoModalTheme = localStorage.getItem('theme') === 'light-theme' ? 'light-theme' : '';
+            const videoModalContent = document.getElementById('videoModal').querySelector('.modal-content');
+            const videoModal = document.getElementById('videoModal');
 
-         displayFilms();
-    </script>
+        if (event.target == videoModal) {
+            videoModal.style.display = 'none';
+            videoModalContent.classList.remove(videoModalTheme)
+               if(videoModal.videoJsPlayer)
+                videoModal.videoJsPlayer.dispose();
+        }
+        if(event.target == document.getElementById("filmDetailsModal")) {
+            document.getElementById("filmDetailsModal").style.display = "none";
+        }
+    }
+    function toggleTheme() {
+        const body = document.body;
+        const themeToggle = document.querySelector('.theme-toggle');
+         const nav = document.querySelector('nav')
+         const searchBar = document.getElementById("searchBar");
+            const filmCards = document.querySelectorAll('.film-card');
+          const filmInfo = document.querySelectorAll('.film-info');
+            const filmTitle = document.querySelectorAll('.film-title')
+        const buttons = document.querySelectorAll('.btn');
+        const filmDetails = document.getElementById('filmDetailsModal').querySelector('.modal-content')
+         const videoModalContent = document.getElementById('videoModal').querySelector('.modal-content')
+              const loginModalContent = document.getElementById('loginModal').querySelector('.modal-content');
+
+        if (body.classList.contains('light-theme')) {
+            body.classList.remove('light-theme');
+             themeToggle.classList.remove('light-theme');
+             nav.classList.remove('light-theme');
+             searchBar.classList.remove('light-theme');
+            filmDetails.classList.remove('light-theme');
+             videoModalContent.classList.remove('light-theme');
+              loginModalContent.classList.remove('light-theme');
+
+            filmCards.forEach(card => card.classList.remove('light-theme'));
+            filmInfo.forEach(info => info.classList.remove('light-theme'));
+              filmTitle.forEach(title => title.classList.remove('light-theme'));
+             buttons.forEach(button => button.classList.remove('light-theme'))
+            localStorage.setItem('theme', '');
+
+        } else {
+            body.classList.add('light-theme');
+             themeToggle.classList.add('light-theme');
+               nav.classList.add('light-theme');
+             searchBar.classList.add('light-theme');
+            filmDetails.classList.add('light-theme');
+             videoModalContent.classList.add('light-theme');
+               loginModalContent.classList.add('light-theme');
+            filmCards.forEach(card => card.classList.add('light-theme'));
+              filmInfo.forEach(info => info.classList.add('light-theme'));
+            filmTitle.forEach(title => title.classList.add('light-theme'));
+            buttons.forEach(button => button.classList.add('light-theme'))
+            localStorage.setItem('theme', 'light-theme');
+        }
+    }
+      function applyInitialTheme() {
+           const body = document.body;
+            const themeToggle = document.querySelector('.theme-toggle');
+                const nav = document.querySelector('nav')
+             const searchBar = document.getElementById("searchBar");
+          const filmCards = document.querySelectorAll('.film-card');
+           const filmInfo = document.querySelectorAll('.film-info');
+              const filmTitle = document.querySelectorAll('.film-title')
+            const buttons = document.querySelectorAll('.btn');
+           const filmDetails = document.getElementById('filmDetailsModal').querySelector('.modal-content');
+          const videoModalContent = document.getElementById('videoModal').querySelector('.modal-content');
+          const loginModalContent = document.getElementById('loginModal').querySelector('.modal-content');
+           const currentTheme = localStorage.getItem('theme')
+           if(currentTheme === 'light-theme') {
+              body.classList.add('light-theme');
+              themeToggle.classList.add('light-theme');
+               nav.classList.add('light-theme');
+              searchBar.classList.add('light-theme');
+               filmDetails.classList.add('light-theme');
+                videoModalContent.classList.add('light-theme');
+                 loginModalContent.classList.add('light-theme');
+              filmCards.forEach(card => card.classList.add('light-theme'));
+               filmInfo.forEach(info => info.classList.add('light-theme'));
+              filmTitle.forEach(title => title.classList.add('light-theme'));
+                 buttons.forEach(button => button.classList.add('light-theme'))
+           }
+        }
+    function showLoading() {
+        document.getElementById('loadingOverlay').style.display = 'flex';
+    }
+    function hideLoading() {
+        document.getElementById('loadingOverlay').style.display = 'none';
+    }
+
+     applyInitialTheme();
+    displayFilms();
+</script>
 </body>
 </html>
