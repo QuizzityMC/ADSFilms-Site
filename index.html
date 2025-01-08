@@ -492,7 +492,21 @@
                  if(videoModal.plyr) {
                      videoModal.plyr.destroy();
                  }
-                videoModal.plyr = new Plyr(videoModal.querySelector('.js-player'));
+                videoModal.plyr = new Plyr(videoModal.querySelector('.js-player'), {
+                      listeners: {
+                            play: function(){},
+                            pause: function(){},
+                            error: (event) => {
+                                  console.error('Plyr error:', event);
+                                  alert("There was an error loading this video. Please try again later")
+                                  videoModal.style.display = "none";
+                             }
+                     }
+                 });
+
+         videoModal.plyr.on('ready', (event) => {
+                  //videoModal.plyr.play(); //Autoplays the video
+             })
         }
         function playTrailer(trailerSrc) {
              showLoading();
