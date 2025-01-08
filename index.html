@@ -16,55 +16,17 @@
             background-color: #0a0a0a;
             color: #fff;
             margin: 0;
-            padding: 0;
+            padding: 20px;
             transition: background-color 0.3s ease;
         }
-        body.light-theme {
-             background-color: #f9f9f9;
-             color: #333;
-         }
         body:hover {
             background-color: #000;
-        }
-        body.light-theme:hover {
-             background-color: #e0e0e0;
-        }
-        nav {
-            background-color: #1a1a1a;
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-         nav.light-theme {
-            background-color: #d0d0d0;
-        }
-        nav h1 {
-            margin: 0;
-        }
-        nav ul {
-            list-style: none;
-            padding: 0;
-            display: flex;
-            gap: 20px;
-        }
-         nav.light-theme a{
-            color: #333;
-        }
-        nav a {
-            color: #f0f0f0;
-            text-decoration: none;
-            font-weight: 400;
         }
         h1 {
             text-align: center;
             font-weight: 700;
             margin-bottom: 30px;
             color: #f0f0f0;
-        }
-        h1.light-theme{
-            color: #333;
         }
         #searchBar {
             width: 95%;
@@ -78,10 +40,6 @@
             border-radius: 6px;
             outline: none;
             display: block;
-        }
-         #searchBar.light-theme {
-             background-color: #d0d0d0;
-            color: #333;
         }
         .film-grid {
             display: grid;
@@ -97,9 +55,6 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
             position: relative;
             cursor: pointer;
-        }
-          .film-card.light-theme {
-            background-color: #d0d0d0;
         }
         .film-card.latest-film .latest-label {
             top: 5px;
@@ -148,17 +103,11 @@
             justify-content: space-between;
             min-height: 120px;
         }
-          .film-info.light-theme{
-            color: #333;
-         }
         .film-title {
             font-weight: 500;
             margin-bottom: 15px;
             font-size: 1.1rem;
         }
-         .film-title.light-theme{
-              color: #333;
-         }
         .btn {
             display: inline-block;
             padding: 10px 20px;
@@ -176,14 +125,7 @@
         .btn:hover {
             background-color: #2980b9;
         }
-          .btn.light-theme {
-              background-color: #5599de;
-             color: #333;
-         }
-          .btn.light-theme:hover {
-              background-color: #5599be;
-         }
-        #loginModal, #filmDetailsModal {
+        #loginModal, #videoModal, #filmDetailsModal {
             display: none;
             position: fixed;
             z-index: 1000;
@@ -205,9 +147,6 @@
             max-width: 450px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
             overflow: auto;
-        }
-         .modal-content.light-theme {
-            background-color: #d0d0d0;
         }
         #filmDetailsModal .modal-content {
             max-width: 700px;
@@ -239,10 +178,18 @@
             border-radius: 6px;
             outline: none;
         }
-           input.light-theme{
-              background-color: #d0d0d0;
-             color: #333;
-         }
+        #videoModal video{
+             max-width: 90%;
+            max-height: 90%;
+            margin: 5% auto;
+            display: block;
+            background-color: #000;
+        }
+        #videoModal {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
         #devReleases {
             margin-top: 15px;
             text-align: center;
@@ -321,27 +268,7 @@
             font-size: 0.8rem;
              border-radius: 4px;
         }
-        footer {
-             position: fixed;
-             left: 20px;
-             bottom: 10px;
-            font-size: 0.8em;
-             opacity: 0.7;
-        }
-        .theme-toggle {
-             position: fixed;
-             right: 20px;
-             bottom: 10px;
-             cursor: pointer;
-             border: 1px solid white;
-             border-radius: 5px;
-             padding: 5px 10px;
-            user-select: none;
-        }
-         .theme-toggle.light-theme{
-             border: 1px solid #333;
-             color: #333;
-         }
+
     </style>
 </head>
 <body>
@@ -349,14 +276,7 @@
         <div class="loader"></div>
     </div>
 
-    <nav>
-        <h1>ADS Films Streaming</h1>
-        <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Movies</a></li>
-        </ul>
-    </nav>
-   
+    <h1>ADS Films Streaming</h1>
     <input type="text" id="searchBar" placeholder="Search Films...">
 
     <div id="filmGridContainer">
@@ -364,27 +284,27 @@
     </div>
 
 
-    <div id="loginModal" aria-modal="true" aria-labelledby="loginModalTitle" role="dialog">
+    <div id="loginModal">
         <div class="modal-content">
-            <h2 id="loginModalTitle">Login Required</h2>
-            <input type="text" id="username" placeholder="Username" aria-label="Username">
-            <input type="password" id="password" placeholder="Password" aria-label="Password">
-            <button class="btn" onclick="login()" aria-label="Login">Login</button>
+            <h2>Login Required</h2>
+            <input type="text" id="username" placeholder="Username">
+            <input type="password" id="password" placeholder="Password">
+            <button class="btn" onclick="login()">Login</button>
         </div>
     </div>
 
+    <div id="videoModal">
+        <video controls id="customVideoPlayer">
+            Your browser does not support the video tag.
+        </video>
+    </div>
 
-    <div id="filmDetailsModal" aria-modal="true" role="dialog">
+    <div id="filmDetailsModal">
         <div class="modal-content">
 
         </div>
     </div>
-    <footer>
-          © ADS Films 2025
-    </footer>
-     <div class="theme-toggle" onclick="toggleTheme()">
-         Light Theme
-     </div>
+
     <script>
         const films = [
             {
@@ -428,20 +348,21 @@
                      shownLatest = true;
                       filmCard.classList.add('latest-film');
                       buttonsHTML = `
-                            ${ film.fullMovie ? `<button class="btn watch-now-btn" data-movie-src="${film.fullMovie}" aria-label="Watch Now for ${film.title}">Watch Now</button>` : ''}
-                            ${ film.trailer ? `<button class="btn play-trailer-btn" data-trailer-src="${film.trailer}" aria-label="Play Trailer for ${film.title}">Play Trailer</button>`: ''}
-                             ${ film.behindTheScenes ? `<button class="btn behind-scenes-btn" data-behind-scenes-src="${film.behindTheScenes}" aria-label="Play Behind the Scenes for ${film.title}">Behind the Scenes</button>` : ''}
+                            ${ film.fullMovie ? `<a href="#" class="btn watch-now-btn" data-movie-src="${film.fullMovie}">Watch Now</a>` : ''}
+                            ${ film.trailer ? `<a href="#" class="btn play-trailer-btn" data-trailer-src="${film.trailer}">Play Trailer</a>`: ''}
+                             ${ film.behindTheScenes ? `<a href="#" class="btn behind-scenes-btn" data-behind-scenes-src="${film.behindTheScenes}">Behind the Scenes</a>` : ''}
                              <div id="devReleases">
-                                        <h3 onclick="toggleReleases(this)"  aria-controls="actsList-${film.title.replace(/[^a-z0-9]/gi, '')}" >Acts</h3>
-                                        <ul id="actsList-${film.title.replace(/[^a-z0-9]/gi, '')}" >
-                                             ${film.acts ? film.acts.map(act => `<li><button onclick="playAct(${act.number})" aria-label="Play ${act.name}">${act.name}</button></li>`).join('') : ''}
+                                        <h3 onclick="toggleReleases(this)">Acts</h3>
+                                        <ul>
+                                             ${film.acts ? film.acts.map(act => `<li><a href="#" onclick="playAct(${act.number})">${act.name}</a></li>`).join('') : ''}
                                         </ul>
                                     </div>
                             `;
+
                   } else {
                         buttonsHTML = `
-                             ${ film.fullMovie ? `<button class="btn watch-now-btn" data-movie-src="${film.fullMovie}" aria-label="Watch Now for ${film.title}">Watch Now</button>` : ''}
-                             ${ film.trailer ? `<button class="btn play-trailer-btn" data-trailer-src="${film.trailer}" aria-label="Play Trailer for ${film.title}">Play Trailer</button>`: ''}
+                             ${ film.fullMovie ? `<a href="#" class="btn watch-now-btn" data-movie-src="${film.fullMovie}">Watch Now</a>` : ''}
+                             ${ film.trailer ? `<a href="#" class="btn play-trailer-btn" data-trailer-src="${film.trailer}">Play Trailer</a>`: ''}
                         `;
                     }
                  filmCard.innerHTML = `
@@ -453,61 +374,52 @@
                                    ${buttonsHTML}
                                 </div>
                             `;
-                  const filmCardTheme = localStorage.getItem('theme') === 'light-theme' ? 'light-theme' : '';
-                 if (filmCard.classList.contains('light-theme') && filmCardTheme !== 'light-theme')
-                     filmCard.classList.remove('light-theme');
-                    filmCard.classList.add(filmCardTheme);
-                     const filmInfo = filmCard.querySelector('.film-info');
-                    if (filmInfo.classList.contains('light-theme') && filmCardTheme !== 'light-theme')
-                       filmInfo.classList.remove('light-theme');
-                      filmInfo.classList.add(filmCardTheme);
-                       const filmTitle = filmCard.querySelector('.film-title');
-                    if (filmTitle.classList.contains('light-theme') && filmCardTheme !== 'light-theme')
-                        filmTitle.classList.remove('light-theme');
-                     filmTitle.classList.add(filmCardTheme);
-                    const buttonTheme = localStorage.getItem('theme') === 'light-theme' ? 'light-theme' : '';
-                    const buttons = filmCard.querySelectorAll('.btn');
-                      buttons.forEach(button => {
-                         if(button.classList.contains('light-theme') && buttonTheme !== 'light-theme')
-                             button.classList.remove('light-theme');
-                         button.classList.add(buttonTheme);
-                     });
                  filmCard.onclick = () => showFilmDetails(film);
                 filmGrid.appendChild(filmCard);
            });
             setupFilmCardInteractions();
             setupSearchFunctionality();
-            const filmGridTheme = localStorage.getItem('theme') === 'light-theme' ? 'light-theme' : '';
-            const filmGridContainerEl = document.getElementById('filmGridContainer');
-            if(filmGridContainerEl.classList.contains('light-theme') && filmGridTheme !== 'light-theme')
-                 filmGridContainerEl.classList.remove('light-theme');
-            filmGridContainerEl.classList.add(filmGridTheme)
         }
-         function setupFilmCardInteractions() {
+
+          function setupFilmCardInteractions() {
             const filmCards = document.querySelectorAll('.film-card');
                filmCards.forEach(card => {
-                    const buttons = card.querySelectorAll("button[class*='btn']");
-                   buttons.forEach(button => {
-                        button.addEventListener("click", (event) => {
+                  const watchNowBtn = card.querySelector('.watch-now-btn');
+                 const playTrailerBtn = card.querySelector('.play-trailer-btn');
+                   const behindScenesBtn = card.querySelector('.behind-scenes-btn');
+                   const devReleases = card.querySelector("#devReleases h3");
+
+                 if (watchNowBtn) {
+                    watchNowBtn.addEventListener('click', (event) => {
                          event.stopPropagation();
-                           const dataset = event.currentTarget.dataset;
-                           if(dataset.movieSrc) {
-                              watchNow(dataset.movieSrc);
-                           }
-                            if(dataset.trailerSrc || dataset.behindScenesSrc) {
-                                  playTrailer(dataset.trailerSrc || dataset.behindScenesSrc);
-                            }
-                       })
-                    })
+                       const movieSrc = event.currentTarget.getAttribute('data-movie-src');
+                           watchNow(movieSrc);
+                     });
+                    }
+                   if(playTrailerBtn) {
+                       playTrailerBtn.addEventListener('click', (event) => {
+                          event.stopPropagation();
+                         const trailerSrc = event.currentTarget.getAttribute('data-trailer-src');
+                           playTrailer(trailerSrc);
+                        });
+                   }
+                    if (behindScenesBtn) {
+                      behindScenesBtn.addEventListener('click', (event) => {
+                           event.stopPropagation();
+                        const behindScenesSrc = event.currentTarget.getAttribute('data-behind-scenes-src');
+                            playTrailer(behindScenesSrc);
+                         });
+                     }
+                   if(devReleases) {
+                       devReleases.addEventListener('click', (event) => {
+                            event.stopPropagation();
+                        })
+                    }
              });
         }
 
          function setupSearchFunctionality() {
             const searchBar = document.getElementById("searchBar");
-                const searchBarTheme = localStorage.getItem('theme') === 'light-theme' ? 'light-theme' : '';
-            if(searchBar.classList.contains('light-theme') && searchBarTheme !== 'light-theme')
-                searchBar.classList.remove('light-theme');
-             searchBar.classList.add(searchBarTheme);
             searchBar.addEventListener("input", (e) => {
                const searchTerm = e.target.value.toLowerCase();
                 const filmCards = document.querySelectorAll(".film-card");
@@ -524,16 +436,12 @@
         function showFilmDetails(film) {
            const detailsModal = document.getElementById('filmDetailsModal');
             const modalContent = detailsModal.querySelector('.modal-content');
-            const detailsModalTheme = localStorage.getItem('theme') === 'light-theme' ? 'light-theme' : '';
-             if(modalContent.classList.contains('light-theme') && detailsModalTheme !== 'light-theme')
-                 modalContent.classList.remove('light-theme');
-            modalContent.classList.add(detailsModalTheme);
             modalContent.innerHTML = `
                     <img src="${film.image}" alt="${film.title}">
                      <h2>${film.title}</h2>
                     <p>${film.description}</p>
                     <p style="color: #e74c3c">${film.message || ''}</p>
-                    <button class="btn" onclick="document.getElementById('filmDetailsModal').style.display = 'none'" aria-label="Close Film Details">Close</button>
+                    <button class="btn" onclick="document.getElementById('filmDetailsModal').style.display = 'none'">Close</button>
            `;
           detailsModal.style.display = 'flex';
         }
@@ -561,10 +469,10 @@
        }
 
         function playTrailer(trailerSrc) {
-            showLoading();
-            setTimeout(() => {
-                hideLoading();
-               const videoPlayer = document.getElementById('customVideoPlayer');
+             showLoading();
+           setTimeout(() => {
+               hideLoading();
+                const videoPlayer = document.getElementById('customVideoPlayer');
                 videoPlayer.src = trailerSrc;
                document.getElementById('videoModal').style.display = 'flex';
             }, 500)
@@ -572,12 +480,6 @@
          function login() {
             const username = document.getElementById('username').value;
            const password = document.getElementById('password').value;
-                const loginModalTheme = localStorage.getItem('theme') === 'light-theme' ? 'light-theme' : '';
-              const loginModalContent = document.getElementById('loginModal').querySelector('.modal-content');
-                if(loginModalContent.classList.contains('light-theme') && loginModalTheme !== 'light-theme')
-                     loginModalContent.classList.remove('light-theme');
-                 loginModalContent.classList.add(loginModalTheme);
-
 
             if ((username === 'QuizzityMC' && password === 'ADS2024t1') ||
                (username === 'user' && password === 'test')) {
@@ -597,10 +499,6 @@
         window.onclick = function(event) {
             if (event.target == document.getElementById('loginModal')) {
                 document.getElementById('loginModal').style.display = 'none';
-                const loginModalTheme = localStorage.getItem('theme') === 'light-theme' ? 'light-theme' : '';
-                const loginModalContent = document.getElementById('loginModal').querySelector('.modal-content');
-                 if(loginModalContent.classList.contains('light-theme') && loginModalTheme !== 'light-theme')
-                      loginModalContent.classList.remove('light-theme')
             }
             if (event.target == document.getElementById('videoModal')) {
                document.getElementById('videoModal').style.display = 'none';
@@ -610,81 +508,14 @@
                 document.getElementById("filmDetailsModal").style.display = "none";
            }
        }
-    function toggleTheme() {
-            const body = document.body;
-            const themeToggle = document.querySelector('.theme-toggle');
-             const nav = document.querySelector('nav')
-              const searchBar = document.getElementById("searchBar");
-            const filmCards = document.querySelectorAll('.film-card');
-             const filmInfo = document.querySelectorAll('.film-info');
-            const filmTitle = document.querySelectorAll('.film-title')
-         const buttons = document.querySelectorAll('.btn');
-       const filmDetails = document.getElementById('filmDetailsModal').querySelector('.modal-content');
-         const loginModalContent = document.getElementById('loginModal').querySelector('.modal-content');
 
-
-            if (body.classList.contains('light-theme')) {
-                body.classList.remove('light-theme');
-                themeToggle.classList.remove('light-theme');
-                 nav.classList.remove('light-theme');
-                   searchBar.classList.remove('light-theme');
-                  filmDetails.classList.remove('light-theme');
-                    loginModalContent.classList.remove('light-theme');
-                filmCards.forEach(card => card.classList.remove('light-theme'));
-                 filmInfo.forEach(info => info.classList.remove('light-theme'));
-                  filmTitle.forEach(title => title.classList.remove('light-theme'));
-                   buttons.forEach(button => button.classList.remove('light-theme'))
-                   localStorage.setItem('theme', '');
-
-            } else {
-                body.classList.add('light-theme');
-                  themeToggle.classList.add('light-theme');
-                   nav.classList.add('light-theme');
-                  searchBar.classList.add('light-theme');
-                    filmDetails.classList.add('light-theme');
-                   loginModalContent.classList.add('light-theme');
-                  filmCards.forEach(card => card.classList.add('light-theme'));
-                   filmInfo.forEach(info => info.classList.add('light-theme'));
-                    filmTitle.forEach(title => title.classList.add('light-theme'));
-                     buttons.forEach(button => button.classList.add('light-theme'))
-                 localStorage.setItem('theme', 'light-theme');
-
-            }
-        }
-    function applyInitialTheme() {
-           const body = document.body;
-            const themeToggle = document.querySelector('.theme-toggle');
-                const nav = document.querySelector('nav')
-             const searchBar = document.getElementById("searchBar");
-          const filmCards = document.querySelectorAll('.film-card');
-               const filmInfo = document.querySelectorAll('.film-info');
-            const filmTitle = document.querySelectorAll('.film-title')
-          const buttons = document.querySelectorAll('.btn');
-             const filmDetails = document.getElementById('filmDetailsModal').querySelector('.modal-content');
-             const loginModalContent = document.getElementById('loginModal').querySelector('.modal-content');
-
-           const currentTheme = localStorage.getItem('theme')
-           if(currentTheme === 'light-theme') {
-              body.classList.add('light-theme');
-              themeToggle.classList.add('light-theme');
-               nav.classList.add('light-theme');
-                searchBar.classList.add('light-theme');
-                  filmDetails.classList.add('light-theme');
-                  loginModalContent.classList.add('light-theme');
-                  filmCards.forEach(card => card.classList.add('light-theme'));
-                 filmInfo.forEach(info => info.classList.add('light-theme'));
-                  filmTitle.forEach(title => title.classList.add('light-theme'));
-                    buttons.forEach(button => button.classList.add('light-theme'))
-           }
-        }
-        function showLoading() {
+         function showLoading() {
             document.getElementById('loadingOverlay').style.display = 'flex';
-        }
+         }
         function hideLoading() {
-            document.getElementById('loadingOverlay').style.display = 'none';
-        }
+             document.getElementById('loadingOverlay').style.display = 'none';
+         }
 
-         applyInitialTheme();
          displayFilms();
     </script>
 </body>
