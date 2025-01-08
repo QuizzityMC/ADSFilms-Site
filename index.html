@@ -486,19 +486,21 @@
                  sessionStorage.setItem('currentMovie', movieSrc);
            }, 500)
        }
-
+        function initializePlyr(videoModal, videoSrc){
+              const videoPlayer = document.getElementById('customVideoPlayer');
+                videoPlayer.src = videoSrc;
+                 if(videoModal.plyr) {
+                     videoModal.plyr.destroy();
+                 }
+                videoModal.plyr = new Plyr(videoModal.querySelector('.js-player'));
+        }
         function playTrailer(trailerSrc) {
              showLoading();
            setTimeout(() => {
                hideLoading();
                const videoModal = document.getElementById('videoModal');
-               const videoPlayer = document.getElementById('customVideoPlayer');
-               videoPlayer.src = trailerSrc;
-               if(videoModal.plyr)
-                videoModal.plyr.destroy();
-                videoModal.plyr = new Plyr(videoModal.querySelector('.js-player'))
-
-               videoModal.style.display = 'flex';
+              initializePlyr(videoModal, trailerSrc);
+                videoModal.style.display = 'flex';
 
             }, 500)
         }
@@ -511,12 +513,8 @@
                 document.getElementById('loginModal').style.display = 'none';
                const movieSrc = sessionStorage.getItem('currentMovie');
                 if (movieSrc) {
-                    const videoModal = document.getElementById('videoModal');
-                   const videoPlayer = document.getElementById('customVideoPlayer');
-                    videoPlayer.src = movieSrc;
-                   if(videoModal.plyr)
-                       videoModal.plyr.destroy();
-                   videoModal.plyr = new Plyr(videoModal.querySelector('.js-player'));
+                     const videoModal = document.getElementById('videoModal');
+                      initializePlyr(videoModal, movieSrc);
                    videoModal.style.display = 'flex';
                    sessionStorage.removeItem('currentMovie');
                 }
@@ -531,7 +529,9 @@
             }
             if (event.target == document.getElementById('videoModal')) {
                document.getElementById('videoModal').style.display = 'none';
-               document.getElementById('customVideoPlayer').pause();
+                 const videoModal = document.getElementById('videoModal');
+               if(videoModal.plyr)
+                 videoModal.plyr.destroy();
            }
            if(event.target == document.getElementById("filmDetailsModal")) {
                 document.getElementById("filmDetailsModal").style.display = "none";
