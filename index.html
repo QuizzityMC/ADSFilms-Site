@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
     <title>ADS Films Streaming</title>
      <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -11,7 +11,7 @@
     <link rel="manifest" href="/site.webmanifest">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
     <link href="https://vjs.zencdn.net/8.6.1/video-js.css" rel="stylesheet" />
-     <style>
+    <style>
         body {
             font-family: 'Roboto', sans-serif;
             background-color: #0a0a0a;
@@ -245,7 +245,7 @@
               background-color: #d0d0d0;
              color: #333;
          }
-           #videoModal .video-js {
+          #videoModal .video-js {
             max-width: 90%;
              max-height: 90%;
              margin: 5% auto;
@@ -445,38 +445,38 @@
     ];
 
     function displayFilms() {
-        const filmGridContainer = document.getElementById('filmGridContainer');
-        const filmGrid = document.createElement('div');
-        filmGrid.className = 'film-grid';
-        filmGridContainer.appendChild(filmGrid);
+      const filmGridContainer = document.getElementById('filmGridContainer');
+            const filmGrid = document.createElement('div');
+            filmGrid.className = 'film-grid';
+             filmGridContainer.appendChild(filmGrid);
 
-        const latest = films.slice().sort((a,b) => b.year - a.year).slice(0,2);
-        let shownLatest = false;
-        films.forEach(film => {
-            const filmCard = document.createElement('div');
-            filmCard.className = 'film-card';
-            let buttonsHTML = "";
-            if (latest.includes(film) && !shownLatest) {
-                shownLatest = true;
-                filmCard.classList.add('latest-film');
-            }
+             const latest = films.slice().sort((a,b) => b.year - a.year).slice(0,2);
+            let shownLatest = false;
+           films.forEach(film => {
+                 const filmCard = document.createElement('div');
+                filmCard.className = 'film-card';
+                 let buttonsHTML = "";
+                 if (latest.includes(film) && !shownLatest) {
+                     shownLatest = true;
+                      filmCard.classList.add('latest-film');
+                 }
 
-            buttonsHTML = `
+                 buttonsHTML = `
                     ${ film.fullMovie ? `<button class="btn watch-now-btn" data-movie-src="${film.fullMovie}" aria-label="Watch Now for ${film.title}">Watch Now</button>` : ''}
                    ${ film.trailer ? `<button class="btn play-trailer-btn" data-trailer-src="${film.trailer}" aria-label="Play Trailer for ${film.title}">Play Trailer</button>`: ''}
                     ${ film.behindTheScenes ? `<button class="btn behind-scenes-btn" data-behind-scenes-src="${film.behindTheScenes}" aria-label="Play Behind the Scenes for ${film.title}">Behind the Scenes</button>` : ''}
                   ${film.acts ?
-                    `<div id="devReleases" >
+                       `<div id="devReleases" >
                              <h3 onclick="toggleReleases(this)"  aria-controls="actsList-${film.title.replace(/[^a-z0-9]/gi, '')}" >Acts</h3>
                              <ul id="actsList-${film.title.replace(/[^a-z0-9]/gi, '')}" >
                                   ${film.acts.map(act => `<li><button onclick="playAct('${act.number}')" aria-label="Play ${act.name}">${act.name}</button></li>`).join('')}
                                  </ul>
                          </div>`
-                    : ''}
+                        : ''}
 
                 `;
 
-            filmCard.innerHTML = `
+                 filmCard.innerHTML = `
                             ${latest.includes(film) && !shownLatest ? `<span class="latest-label">Latest</span>` : ''}
                                 <img src="${film.image}" alt="${film.title}">
                                  <span class="video-length">${film.length}</span>
@@ -485,26 +485,26 @@
                                    ${buttonsHTML}
                                 </div>
                             `;
-             const filmCardTheme = localStorage.getItem('theme') === 'light-theme' ? 'light-theme' : '';
-            filmCard.classList.add(filmCardTheme);
-              const filmInfo = filmCard.querySelector('.film-info');
-              filmInfo.classList.add(filmCardTheme);
-              const filmTitle = filmCard.querySelector('.film-title');
-              filmTitle.classList.add(filmCardTheme);
-            const buttonTheme = localStorage.getItem('theme') === 'light-theme' ? 'light-theme' : '';
-            const buttons = filmCard.querySelectorAll('.btn');
-            buttons.forEach(button => {
-                button.classList.add(buttonTheme);
-            });
-            filmCard.onclick = () => showFilmDetails(film);
-            filmGrid.appendChild(filmCard);
-        });
-        setupFilmCardInteractions();
-        setupSearchFunctionality();
+                 const filmCardTheme = localStorage.getItem('theme') === 'light-theme' ? 'light-theme' : '';
+                    filmCard.classList.add(filmCardTheme);
+                   const filmInfo = filmCard.querySelector('.film-info');
+                      filmInfo.classList.add(filmCardTheme);
+                       const filmTitle = filmCard.querySelector('.film-title');
+                         filmTitle.classList.add(filmCardTheme);
+                  const buttonTheme = localStorage.getItem('theme') === 'light-theme' ? 'light-theme' : '';
+                       const buttons = filmCard.querySelectorAll('.btn');
+                       buttons.forEach(button => {
+                         button.classList.add(buttonTheme);
+                       });
+                 filmCard.onclick = () => showFilmDetails(film);
+                filmGrid.appendChild(filmCard);
+           });
+           setupFilmCardInteractions();
+           setupSearchFunctionality();
            const filmGridTheme = localStorage.getItem('theme') === 'light-theme' ? 'light-theme' : '';
             const filmGridContainerEl = document.getElementById('filmGridContainer');
             filmGridContainerEl.classList.add(filmGridTheme)
-    }
+        }
     function setupFilmCardInteractions() {
         const filmCards = document.querySelectorAll('.film-card');
         filmCards.forEach(card => {
@@ -544,7 +544,7 @@
     function showFilmDetails(film) {
         const detailsModal = document.getElementById('filmDetailsModal');
         const modalContent = detailsModal.querySelector('.modal-content');
-             const detailsModalTheme = localStorage.getItem('theme') === 'light-theme' ? 'light-theme' : '';
+          const detailsModalTheme = localStorage.getItem('theme') === 'light-theme' ? 'light-theme' : '';
              modalContent.classList.add(detailsModalTheme);
         modalContent.innerHTML = `
                     <img src="${film.image}" alt="${film.title}">
@@ -577,9 +577,9 @@
             sessionStorage.setItem('currentMovie', movieSrc);
         }, 500)
     }
-    function initializeVideoJS(videoModal, videoSrc){
+      function initializeVideoJS(videoModal, videoSrc){
             const videoPlayer = document.getElementById('customVideoPlayer');
-                videoPlayer.src = videoSrc
+             videoPlayer.src = videoSrc;
             const videoJsPlayer = videojs(videoPlayer);
             videoModal.videoJsPlayer = videoJsPlayer;
              videoJsPlayer.on("error", (event) => {
@@ -595,26 +595,26 @@
             const videoModal = document.getElementById('videoModal');
            initializeVideoJS(videoModal, trailerSrc)
             videoModal.style.display = 'flex';
-            const videoModalTheme = localStorage.getItem('theme') === 'light-theme' ? 'light-theme' : '';
+             const videoModalTheme = localStorage.getItem('theme') === 'light-theme' ? 'light-theme' : '';
              const videoModalElement = document.getElementById('videoModal').querySelector('.modal-content')
              videoModalElement.classList.add(videoModalTheme);
-
         }, 500)
     }
     function login() {
         const username = document.getElementById('username').value;
         const password = document.getElementById('password').value;
-         const loginModalTheme = localStorage.getItem('theme') === 'light-theme' ? 'light-theme' : '';
+           const loginModalTheme = localStorage.getItem('theme') === 'light-theme' ? 'light-theme' : '';
              const loginModalContent = document.getElementById('loginModal').querySelector('.modal-content')
              loginModalContent.classList.add(loginModalTheme);
+
 
         if ((username === 'QuizzityMC' && password === 'ADS2024t1') ||
             (username === 'user' && password === 'test')) {
             document.getElementById('loginModal').style.display = 'none';
             const movieSrc = sessionStorage.getItem('currentMovie');
             if (movieSrc) {
-                 const videoModal = document.getElementById('videoModal');
-                initializeVideoJS(videoModal, movieSrc)
+                  const videoModal = document.getElementById('videoModal');
+                   initializeVideoJS(videoModal, movieSrc)
                 videoModal.style.display = 'flex';
                 sessionStorage.removeItem('currentMovie');
             }
@@ -629,17 +629,16 @@
                const loginModal = document.getElementById('loginModal');
         if (event.target == loginModal) {
             loginModal.style.display = 'none';
-            loginModalContent.classList.remove(loginModalTheme);
+             loginModalContent.classList.remove(loginModalTheme);
         }
-          const videoModalTheme = localStorage.getItem('theme') === 'light-theme' ? 'light-theme' : '';
+         const videoModalTheme = localStorage.getItem('theme') === 'light-theme' ? 'light-theme' : '';
             const videoModalContent = document.getElementById('videoModal').querySelector('.modal-content');
             const videoModal = document.getElementById('videoModal');
-
         if (event.target == videoModal) {
             videoModal.style.display = 'none';
             videoModalContent.classList.remove(videoModalTheme)
                if(videoModal.videoJsPlayer)
-                videoModal.videoJsPlayer.dispose();
+                 videoModal.videoJsPlayer.dispose();
         }
         if(event.target == document.getElementById("filmDetailsModal")) {
             document.getElementById("filmDetailsModal").style.display = "none";
@@ -655,36 +654,37 @@
             const filmTitle = document.querySelectorAll('.film-title')
         const buttons = document.querySelectorAll('.btn');
         const filmDetails = document.getElementById('filmDetailsModal').querySelector('.modal-content')
-         const videoModalContent = document.getElementById('videoModal').querySelector('.modal-content')
-              const loginModalContent = document.getElementById('loginModal').querySelector('.modal-content');
+             const videoModalContent = document.getElementById('videoModal').querySelector('.modal-content')
+            const loginModalContent = document.getElementById('loginModal').querySelector('.modal-content');
+
 
         if (body.classList.contains('light-theme')) {
             body.classList.remove('light-theme');
              themeToggle.classList.remove('light-theme');
-             nav.classList.remove('light-theme');
-             searchBar.classList.remove('light-theme');
-            filmDetails.classList.remove('light-theme');
-             videoModalContent.classList.remove('light-theme');
-              loginModalContent.classList.remove('light-theme');
-
+               nav.classList.remove('light-theme');
+            searchBar.classList.remove('light-theme');
+             filmDetails.classList.remove('light-theme');
+              videoModalContent.classList.remove('light-theme');
+               loginModalContent.classList.remove('light-theme');
             filmCards.forEach(card => card.classList.remove('light-theme'));
             filmInfo.forEach(info => info.classList.remove('light-theme'));
-              filmTitle.forEach(title => title.classList.remove('light-theme'));
+                filmTitle.forEach(title => title.classList.remove('light-theme'));
              buttons.forEach(button => button.classList.remove('light-theme'))
             localStorage.setItem('theme', '');
 
         } else {
             body.classList.add('light-theme');
-             themeToggle.classList.add('light-theme');
-               nav.classList.add('light-theme');
-             searchBar.classList.add('light-theme');
-            filmDetails.classList.add('light-theme');
-             videoModalContent.classList.add('light-theme');
+            themeToggle.classList.add('light-theme');
+             nav.classList.add('light-theme');
+            searchBar.classList.add('light-theme');
+               filmDetails.classList.add('light-theme');
+               videoModalContent.classList.add('light-theme');
                loginModalContent.classList.add('light-theme');
+
             filmCards.forEach(card => card.classList.add('light-theme'));
-              filmInfo.forEach(info => info.classList.add('light-theme'));
-            filmTitle.forEach(title => title.classList.add('light-theme'));
-            buttons.forEach(button => button.classList.add('light-theme'))
+            filmInfo.forEach(info => info.classList.add('light-theme'));
+                filmTitle.forEach(title => title.classList.add('light-theme'));
+             buttons.forEach(button => button.classList.add('light-theme'))
             localStorage.setItem('theme', 'light-theme');
         }
     }
@@ -692,27 +692,27 @@
            const body = document.body;
             const themeToggle = document.querySelector('.theme-toggle');
                 const nav = document.querySelector('nav')
-             const searchBar = document.getElementById("searchBar");
-          const filmCards = document.querySelectorAll('.film-card');
-           const filmInfo = document.querySelectorAll('.film-info');
-              const filmTitle = document.querySelectorAll('.film-title')
+            const searchBar = document.getElementById("searchBar");
+         const filmCards = document.querySelectorAll('.film-card');
+              const filmInfo = document.querySelectorAll('.film-info');
+            const filmTitle = document.querySelectorAll('.film-title')
             const buttons = document.querySelectorAll('.btn');
            const filmDetails = document.getElementById('filmDetailsModal').querySelector('.modal-content');
-          const videoModalContent = document.getElementById('videoModal').querySelector('.modal-content');
-          const loginModalContent = document.getElementById('loginModal').querySelector('.modal-content');
+         const videoModalContent = document.getElementById('videoModal').querySelector('.modal-content');
+         const loginModalContent = document.getElementById('loginModal').querySelector('.modal-content');
            const currentTheme = localStorage.getItem('theme')
            if(currentTheme === 'light-theme') {
               body.classList.add('light-theme');
-              themeToggle.classList.add('light-theme');
-               nav.classList.add('light-theme');
+               themeToggle.classList.add('light-theme');
+             nav.classList.add('light-theme');
               searchBar.classList.add('light-theme');
                filmDetails.classList.add('light-theme');
                 videoModalContent.classList.add('light-theme');
                  loginModalContent.classList.add('light-theme');
               filmCards.forEach(card => card.classList.add('light-theme'));
-               filmInfo.forEach(info => info.classList.add('light-theme'));
-              filmTitle.forEach(title => title.classList.add('light-theme'));
-                 buttons.forEach(button => button.classList.add('light-theme'))
+              filmInfo.forEach(info => info.classList.add('light-theme'));
+                filmTitle.forEach(title => title.classList.add('light-theme'));
+                  buttons.forEach(button => button.classList.add('light-theme'))
            }
         }
     function showLoading() {
